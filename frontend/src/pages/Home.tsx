@@ -1,6 +1,8 @@
+import Navbar from "../components/Navbar"
+
 const Home = () => {
 	return (
-		<div className="flex items-center justify-center h-screen">Home</div>
+		<div className="bg-[#DDE2E1] min-h-screen"><Navbar/></div>
 	)
 }
 

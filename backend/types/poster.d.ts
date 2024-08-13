@@ -1,4 +1,4 @@
-interface Poster {
+export interface Poster {
 	_id: string,
 	name: string,
 	imageUrl: String,

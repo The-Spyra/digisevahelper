@@ -1,4 +1,4 @@
-interface Service {
+export interface Service {
 	_id: string,
 	name: string,
 	imageUrl: string,
