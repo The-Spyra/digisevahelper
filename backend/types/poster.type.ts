@@ -1,6 +1,8 @@
 interface Poster {
-	_id: string,
-	name: string,
-	imageUrl: String,
-	createdAt: Date
+  _id: string
+  name: string
+  imageUrl: String
+  createdAt: Date
 }
+
+export default Poster
