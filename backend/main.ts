@@ -3,7 +3,7 @@ import morgan from "morgan"
 import cors from "cors"
 import { loadEnvFile } from "process"
 
-loadEnvFile(".env.example")
+loadEnvFile(".env")
 
 const app = express()
 

@@ -1,24 +1,24 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
+ 
   return (
-    <div className="w-screen bg-[#00AA88] px-3 py-2 rounded-b-md shadow-[1px_1px_35px_1px] shadow-slate-500 flex justify-between items-center">
+    <div className="w-full bg-[#00AA88] px-3 py-2 rounded-b-md shadow-[1px_1px_35px_1px] shadow-slate-500 flex justify-between items-center">
       <h1 className="font-bold text-[26px]">DIGISEVAHELPER</h1>
-      <div className="text-[14px] flex items-center gap-5 font-medium ">
-        <Link to={"/"} className="uppercase">
+      <div className="text-[14px] flex items-center gap-5 font-semibold ">
+        <Link to={"/doc"} className="uppercase transition-all duration-150" id="doc">
           Documents Required
         </Link>
-        <Link to={"/"} className="uppercase">
+        <Link to={"/charges"} className="uppercase">
           SERVICE CHARGE
         </Link>
-        <Link to={"/"} className="uppercase">
+        <Link to={"/forms"} className="uppercase">
           FORMS
         </Link>
-        <Link to={"/"} className="uppercase">
+        <Link to={"/editing-tools"} className="uppercase">
           EDITING TOOLS
         </Link>
-        <Link to={"/"} className="uppercase">
+        <Link to={"/posts"} className="uppercase">
           POSTERS
         </Link>
         <Link to={"/"} className="uppercase">
