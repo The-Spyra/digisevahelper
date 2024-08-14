@@ -7,7 +7,7 @@ interface Props {
 
 function ServicesIcon({imageUrl,redirectUrl,title}:Props) {
   return (
-    <a href={redirectUrl} className='flex flex-col w-[100px]'>
+    <a href={redirectUrl} className='flex flex-col w-[70px] md:w-[100px]'>
         <div className='bg-[#2AA88F] p-3  aspect-square rounded-full'>
             <img src={imageUrl} alt=""  className='rounded-full shadow-md shadow-[#00000086] aspect-square'/>
         </div>

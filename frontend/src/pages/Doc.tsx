@@ -6,10 +6,10 @@ function Doc() {
   return (
     <div className="bg-[#DDE2E1] min-h-screen flex flex-col">
       <Navbar />
-        <h1 className="font-extrabold text-[64px] text-center mt-20">
+        <h1 className="font-extrabold text-[26px] md:text-[64px] text-center mt-20">
           Documents Required
         </h1>
-        <label className="relative self-center flex gap-4 items-center justify-between w-[70%] px-3 py-2 bg-[#05846A8C] rounded-[100px] h-[50px]">
+        <label className="relative self-center mt-5 flex gap-4 items-center justify-between w-[90%] md:w-[70%] px-3 py-2 bg-[#05846A8C] rounded-[100px] h-[50px]">
           <svg
             width="25"
             height="25"
@@ -28,8 +28,8 @@ function Doc() {
             className="w-full placeholder:text-[#00000054] placeholder:text-center font-semibold border-none outline-none px-2 bg-transparent"
           />
         </label>
-        <div className="px-8 flex flex-col">
-        <div className="grid grid-cols-3 justify-between gap-8 mt-5">
+        <div className="md:px-8 px-[6px] flex flex-col">
+        <div className="grid grid-cols-2 md:grid-cols-3 justify-between gap-4 md:gap-8 mt-12 md:mt-5">
           <DocReq title="test" docs={["asdsad", "asdasdasda", "asddsadas"]} />
           <DocReq title="test" docs={["asdsad", "asdasdasda", "asddsadas"]} />
           <DocReq title="test" docs={["asdsad", "asdasdasda", "asddsadas"]} />

@@ -5,10 +5,10 @@ function Charges() {
   return (
     <div className="bg-[#DDE2E1] min-h-screen flex flex-col">
     <Navbar />
-      <h1 className="font-extrabold text-[64px] text-center mt-20">
+      <h1 className="font-extrabold text-[26px] md:text-[64px] text-center mt-20">
         Services Charges
       </h1>
-      <label className="relative self-center flex gap-4 items-center justify-between w-[70%] px-3 py-2 bg-[#05846A8C] rounded-[100px] h-[50px]">
+      <label className="relative self-center flex gap-4 items-center justify-between w-[90%] md:w-[70%] px-3 py-2 bg-[#05846A8C] rounded-[100px] h-[50px]">
         <svg
           width="25"
           height="25"
@@ -27,15 +27,15 @@ function Charges() {
           className="w-full placeholder:text-[#00000054] placeholder:text-center font-semibold border-none outline-none px-2 bg-transparent"
         />
       </label>
-      <div className="px-8 flex flex-col">
-        <div className='w-full rounded-[100px] mt-10 flex justify-between px-5 bg-[#1A8F78] h-[50px]'>
-            <h1 className='text-[30px] font-semibold text-black'>SERVICES NAME</h1>
-            <h1 className='text-[30px] font-semibold text-black'>SERVICES CHARGES</h1>
+      <div className=" px-[6px] md:px-8 flex flex-col">
+        <div className='w-full rounded-[100px] mt-24 md:mt-10 flex justify-between px-5 items-center bg-[#1A8F78] h-[30px] md:h-[50px]'>
+            <h1 className=' text-[13px] md:text-[30px] font-semibold text-black'>SERVICES NAME</h1>
+            <h1 className='text-[13px] md:text-[30px] font-semibold text-black'>SERVICES CHARGES</h1>
         </div>
         {[1,2,3,4,5,6,7].map((x)=>(
-            <div className='w-full rounded-[100px] mt-3 flex justify-between px-5 border border-black h-[50px]'>
-            <h1 className='text-[30px] font-semibold text-black'>SERVICES NAME</h1>
-            <h1 className='text-[30px] font-semibold text-black'>{x}</h1>
+            <div className='w-full rounded-[100px] mt-1 md:mt-3 flex justify-between items-center px-5 border border-black h-[30px] md:h-[50px]'>
+            <h1 className='text-[13px] md:text-[30px] font-semibold text-black'>SERVICES NAME</h1>
+            <h1 className='text-[13px] md:text-[30px] font-semibold text-black'>{x}</h1>
         </div>
         ))}
     </div>

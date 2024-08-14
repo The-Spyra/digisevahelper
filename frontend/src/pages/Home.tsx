@@ -6,10 +6,10 @@ const Home = () => {
     <div className="bg-[#DDE2E1] min-h-screen">
       <Navbar />
       <div className="flex flex-col">
-        <h1 className="font-extrabold text-[64px] text-center mt-20">
+        <h1 className="font-extrabold text-[26px] md:text-[64px] text-center mt-20">
           Search Services
         </h1>
-        <label className="relative self-center flex gap-4 items-center justify-between w-[70%] px-3 py-2 bg-[#05846A8C] rounded-[100px] h-[50px]">
+        <label className="relative self-center flex gap-4 items-center justify-between w-[90%] md:w-[70%] px-3 py-2 bg-[#05846A8C] rounded-[100px] h-[50px]">
           <input
             type="text"
             placeholder="Type Here"
@@ -32,7 +32,7 @@ const Home = () => {
           Recents
         </h1>
         <hr className="w-[60px] bg-black text-black fill-black h-[3px] self-center" />
-        <div className="flex justify-between w-[50%] self-center mt-5 items-center gap-3">
+        <div className="flex justify-between w-[90%] md:w-[50%] self-center mt-5 items-center gap-3">
           <ServicesIcon
             imageUrl="https://lh3.googleusercontent.com/a/AEdFTp65RCG22jI1p7NzSJ4G77zOwyJ6omf4jI7BjLhb=s96-c"
             redirectUrl="https://google.com"
@@ -59,7 +59,7 @@ const Home = () => {
           Available Services
         </h1>
         <hr className="w-[120px] bg-black text-black fill-black h-[3px] self-center" />
-        <div className="grid grid-cols-9 self-center gap-16 mt-5 justify-evenly">
+        <div className="grid grid-cols-4 md:grid-cols-9 self-center gap-5 md:gap-16 mt-5 justify-evenly">
           {[1, 2, 3, 4, 4, 5, 6, 7, 8, 9].map(() => (
             <ServicesIcon
               imageUrl="https://lh3.googleusercontent.com/a/AEdFTp65RCG22jI1p7NzSJ4G77zOwyJ6omf4jI7BjLhb=s96-c"
