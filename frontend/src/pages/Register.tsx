@@ -4,10 +4,13 @@ import { z } from "zod"
 import api, { handleAxiosError } from "../utils/api"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
+import Navbar from "../components/Navbar"
 
 const formSchema = z
   .object({
     email: z.string().email({ message: "Email is invalid" }),
+    shopName: z.string(),
+    phone:z.string(),
     password: z.string(),
     confirmPassword: z.string(),
   })
@@ -47,42 +50,70 @@ const Register = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="flex flex-col items-center gap-5">
-        <p className="text-4xl">Register</p>
-        <form
-          className="flex flex-col items-center gap-3"
-          onSubmit={handleSubmit(submit)}
-        >
-          <input
-            {...register("email")}
-            placeholder="Email"
-            type="text"
-            className="outline-none border-2"
-          />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
-          )}
-          <input
-            {...register("password")}
-            placeholder="Password"
-            type="password"
-            className="outline-none border-2"
-          />
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
-          )}
-          <input
-            {...register("confirmPassword")}
-            placeholder="Confirm password"
-            type="password"
-            className="outline-none border-2"
-          />
-          {errors.confirmPassword && (
-            <p className="text-red-500">{errors.confirmPassword.message}</p>
-          )}
-          <button>Register</button>
-        </form>
+    <div className=" min-h-screen">
+      <Navbar />
+      <div className="flex flex-col items-center justify-center h-full py-10">
+        <div className="w-[40%] p-[55px] bg-gradient-to-tl from-[#046350] to-[#67ECD1] shadow-xl rounded-xl">
+          <div className="flex flex-col items-center gap-5 bg-white rounded-xl px-[36px] py-8">
+            <p className="text-4xl">Create an account</p>
+            <form
+              className="flex flex-col gap-3 w-full"
+              onSubmit={handleSubmit(submit)}
+            >
+              <label>Email</label>
+              <input
+                {...register("email")}
+                placeholder="Email"
+                type="text"
+                className="outline-none border-2 rounded h-[48px] w-full px-2"
+              />
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
+              <label>Shop Name</label>
+              <input
+                {...register("shopName")}
+                placeholder="Shop Name"
+                type="text"
+                className="outline-none border-2 rounded h-[48px] w-full px-2"
+              />
+              {errors.shopName && (
+                <p className="text-red-500">{errors.shopName.message}</p>
+              )}
+              <label>Phone Number</label>
+              <input
+                {...register("phone")}
+                placeholder="Phone Number"
+                type="text"
+                className="outline-none border-2 rounded h-[48px] w-full px-2"
+              />
+              {errors.phone && (
+                <p className="text-red-500">{errors.phone.message}</p>
+              )}
+              <label>Password</label>
+              <input
+                {...register("password")}
+                placeholder="Password"
+                type="password"
+                className="outline-none border-2 rounded h-[48px] w-full px-2"
+              />
+              {errors.password && (
+                <p className="text-red-500">{errors.password.message}</p>
+              )}
+              <label>Confirm Password</label>
+              <input
+                {...register("confirmPassword")}
+                placeholder="Confirm password"
+                type="password"
+                className="outline-none border-2 rounded h-[48px] w-full px-2"
+              />
+              {errors.confirmPassword && (
+                <p className="text-red-500">{errors.confirmPassword.message}</p>
+              )}
+              <button className="bg-[#1570EF] w-full rounded py-2 hover:bg-[#325f9f] transition-all duration-150 text-white">Create Account</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   )

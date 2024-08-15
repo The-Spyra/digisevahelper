@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import User from "../types/user.type"
+import User from "../types/user.d"
 
 const userSchema = new mongoose.Schema<User>(
   {
@@ -11,6 +11,9 @@ const userSchema = new mongoose.Schema<User>(
     phone: {
       type: String,
       unique: true,
+    },
+    shopName:{
+      type: String,
     },
     password: {
       type: String,

@@ -1,4 +1,7 @@
 import nodeMailer from "nodemailer"
+import {loadEnvFile} from "process"
+
+loadEnvFile(".env")
 
 const EMAIL_SERVER = process.env.EMAIL_SERVER
 const EMAIL_PORT = process.env.EMAIL_PORT

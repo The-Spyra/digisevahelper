@@ -1,21 +1,21 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react"
+import { Link } from "react-router-dom"
 
 function Navbar() {
   useEffect(() => {
-    const elem = document.getElementById("mobile-nav");
+    const elem = document.getElementById("mobile-nav")
     if (elem) {
-      elem.style.transform = "translateX(-100%)";
+      elem.style.transform = "translateX(-100%)"
     }
-  });
+  })
   return (
     <div className="w-full bg-[#00AA88] px-3 py-2 rounded-b-md shadow-[1px_1px_35px_1px] shadow-slate-500 flex justify-between items-center">
       <div className="flex items-center gap-3">
         <button
           onClick={() => {
-            const elem = document.getElementById("mobile-nav");
+            const elem = document.getElementById("mobile-nav")
             if (elem) {
-              elem.style.transform = "translateX(0%)";
+              elem.style.transform = "translateX(0%)"
             }
           }}
           className="md:hidden"
@@ -54,9 +54,9 @@ function Navbar() {
           <div>
             <h1
               onClick={() => {
-                const elem = document.getElementById("mobile-nav");
+                const elem = document.getElementById("mobile-nav")
                 if (elem) {
-                  elem.style.transform = "translateX(-100%)";
+                  elem.style.transform = "translateX(-100%)"
                 }
               }}
               className="font-bold md:text-[26px] bg-[#104238] text-white px-5 py-2 rounded-3xl flex items-center gap-7"
@@ -105,11 +105,22 @@ function Navbar() {
               Ekarool - Calicut <br />
               80755565598
             </p>
-            <p className="flex items-center justify-center text-white gap-1 text-center"><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="17" height="17" rx="8.5" fill="#D9D9D9"/>
-<path d="M12.7344 6.10938L12.75 6.14062L11.4531 6.92969L11.4375 6.88281C11.1667 6.35156 10.7865 5.9349 10.2969 5.63281C9.80729 5.32552 9.26562 5.17188 8.67188 5.17188C8.24479 5.17188 7.84375 5.2526 7.46875 5.41406C7.09896 5.57552 6.77604 5.79688 6.5 6.07812C6.21875 6.35938 5.9974 6.6901 5.83594 7.07031C5.67448 7.44531 5.59375 7.84635 5.59375 8.27344C5.59375 8.69531 5.67448 9.09375 5.83594 9.46875C5.9974 9.84375 6.21875 10.1719 6.5 10.4531C6.77604 10.7344 7.09896 10.9557 7.46875 11.1172C7.84375 11.2786 8.24479 11.3594 8.67188 11.3594C9.21354 11.3594 9.72656 11.2188 10.2109 10.9375C10.6953 10.6562 11.0729 10.2839 11.3438 9.82031L11.375 9.77344L12.7344 10.5469L12.7188 10.5938C12.5156 10.9323 12.2682 11.237 11.9766 11.5078C11.6901 11.7786 11.3698 12.013 11.0156 12.2109C10.2917 12.612 9.51042 12.8125 8.67188 12.8125C8.08333 12.8125 7.51562 12.6979 6.96875 12.4688C6.42188 12.2396 5.93229 11.9219 5.5 11.5156C5.07292 11.1094 4.72917 10.6302 4.46875 10.0781C4.20833 9.52604 4.07812 8.92448 4.07812 8.27344C4.07812 7.88281 4.13281 7.4974 4.24219 7.11719C4.46094 6.34635 4.84896 5.67708 5.40625 5.10938C5.54167 4.96354 5.6875 4.83073 5.84375 4.71094C6 4.58594 6.16146 4.47135 6.32812 4.36719C6.66667 4.16406 7.03385 4.00521 7.42969 3.89062C7.82552 3.77083 8.23958 3.71094 8.67188 3.71094C9.56771 3.71094 10.3776 3.92188 11.1016 4.34375C11.8151 4.76562 12.3594 5.35417 12.7344 6.10938Z" fill="black"/>
-</svg>
-Chooscod</p>
+            <p className="flex items-center justify-center text-white gap-1 text-center">
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 17 17"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="17" height="17" rx="8.5" fill="#D9D9D9" />
+                <path
+                  d="M12.7344 6.10938L12.75 6.14062L11.4531 6.92969L11.4375 6.88281C11.1667 6.35156 10.7865 5.9349 10.2969 5.63281C9.80729 5.32552 9.26562 5.17188 8.67188 5.17188C8.24479 5.17188 7.84375 5.2526 7.46875 5.41406C7.09896 5.57552 6.77604 5.79688 6.5 6.07812C6.21875 6.35938 5.9974 6.6901 5.83594 7.07031C5.67448 7.44531 5.59375 7.84635 5.59375 8.27344C5.59375 8.69531 5.67448 9.09375 5.83594 9.46875C5.9974 9.84375 6.21875 10.1719 6.5 10.4531C6.77604 10.7344 7.09896 10.9557 7.46875 11.1172C7.84375 11.2786 8.24479 11.3594 8.67188 11.3594C9.21354 11.3594 9.72656 11.2188 10.2109 10.9375C10.6953 10.6562 11.0729 10.2839 11.3438 9.82031L11.375 9.77344L12.7344 10.5469L12.7188 10.5938C12.5156 10.9323 12.2682 11.237 11.9766 11.5078C11.6901 11.7786 11.3698 12.013 11.0156 12.2109C10.2917 12.612 9.51042 12.8125 8.67188 12.8125C8.08333 12.8125 7.51562 12.6979 6.96875 12.4688C6.42188 12.2396 5.93229 11.9219 5.5 11.5156C5.07292 11.1094 4.72917 10.6302 4.46875 10.0781C4.20833 9.52604 4.07812 8.92448 4.07812 8.27344C4.07812 7.88281 4.13281 7.4974 4.24219 7.11719C4.46094 6.34635 4.84896 5.67708 5.40625 5.10938C5.54167 4.96354 5.6875 4.83073 5.84375 4.71094C6 4.58594 6.16146 4.47135 6.32812 4.36719C6.66667 4.16406 7.03385 4.00521 7.42969 3.89062C7.82552 3.77083 8.23958 3.71094 8.67188 3.71094C9.56771 3.71094 10.3776 3.92188 11.1016 4.34375C11.8151 4.76562 12.3594 5.35417 12.7344 6.10938Z"
+                  fill="black"
+                />
+              </svg>
+              Chooscod
+            </p>
           </div>
         </div>
         <h1 className="font-bold md:text-[26px] ">DIGISEVAHELPER</h1>
@@ -148,11 +159,11 @@ Chooscod</p>
             />
           </svg>
         </Link>
-        <Link to={"/"}>Register</Link>
-        <Link to={"/"}>Login</Link>
+        <Link to={"/register"}>Register</Link>
+        <Link to={"/login"}>Login</Link>
       </div>
     </div>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

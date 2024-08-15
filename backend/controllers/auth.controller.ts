@@ -48,7 +48,7 @@ export const login = async (req: Request, res: Response) => {
 }
 
 export const register = async (req: Request, res: Response) => {
-  const { email, password } = req.body
+  const { email, password,shopName,phone } = req.body
 
   if (!email || !password) {
     return res.status(400).send({
@@ -67,6 +67,8 @@ export const register = async (req: Request, res: Response) => {
   const hashedPass = await encryptPassword(password)
   const user = new userModel({
     email,
+    shopName,
+    phone,
     password: hashedPass,
   })
 
