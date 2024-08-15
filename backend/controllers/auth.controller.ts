@@ -86,6 +86,33 @@ export const register = async (req: Request, res: Response) => {
   })
 }
 
+export const unverifiedUserDetails = async (req: Request, res: Response) => {
+  const { token } = req.body
+
+  if (!token) {
+    return res.status(400).send({
+      success: false,
+      message: "Token not provided",
+    })
+  }
+
+  const payload = verifyToken(token)
+  const user = await userModel.findById(payload.id)
+
+  if (!user) {
+    return res.status(400).send({
+      success: false,
+      message: "User not found",
+    })
+  }
+
+  res.status(200).send({
+    success: true,
+    message: "User details fetched successfully",
+    user,
+  })
+}
+
 export const resendVerificationLink = (req: Request, res: Response) => {}
 
 export const verify = async (req: Request, res: Response) => {

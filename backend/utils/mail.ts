@@ -1,5 +1,5 @@
 import nodeMailer from "nodemailer"
-import {loadEnvFile} from "process"
+import { loadEnvFile } from "process"
 
 loadEnvFile(".env")
 
