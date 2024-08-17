@@ -7,6 +7,7 @@ import errorHandlingMiddleware from "./middlewares/errorhandling.middleware"
 import authRoute from "./routes/auth.route"
 import userRoute from "./routes/user.route"
 import cookies from "cookie-parser"
+import adminRoute from "./routes/admin.route"
 
 loadEnvFile(".env")
 connectDb()
@@ -26,6 +27,7 @@ app.use(
 
 app.use("/auth", authRoute)
 app.use("/user", userRoute)
+app.use("/admin", adminRoute)
 
 app.use(errorHandlingMiddleware)
 

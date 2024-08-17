@@ -3,6 +3,7 @@ import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Verify from "./pages/Verify"
+import AdminLogin from "./pages/admin/AdminLogin"
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/verify" element={<Verify />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
     </Routes>
   )
 }

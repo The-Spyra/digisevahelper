@@ -20,6 +20,10 @@ export const handleAxiosError = (
       navigate("/verify")
     }
 
+    if (error.response?.data.error == "admin-unauthorized") {
+      navigate("/admin/login")
+    }
+
     if (error.response?.data.message) {
       toast.error(error.response.data.message)
     } else {
