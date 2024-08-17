@@ -7,7 +7,7 @@ export const encryptPassword = async (password: string) => {
   return encryptedPassword
 }
 
-export const decryptPassword = async (
+export const comparePassword = async (
   password: string,
   encryptedPassword: string
 ) => {
