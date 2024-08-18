@@ -66,7 +66,7 @@ export const updateForm = async (req: Request, res: Response) => {
   res.status(200).send({
     success: true,
     message: "Form updated successfully",
-    form
+    form,
   })
 }
 
