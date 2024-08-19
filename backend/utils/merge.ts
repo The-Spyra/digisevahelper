@@ -47,8 +47,7 @@ export async function mergeImagesWithWatermark(
   image2Path: string,
   name: string,
   phone: string,
-  outputPath: string
-): Promise<void> {
+) {
   try {
     // Check if image2Path is a URL
     const image2Buffer = image2Path.startsWith('http')
@@ -101,7 +100,7 @@ export async function mergeImagesWithWatermark(
       const phonebuff =await  sharp(svgPhoneBuff).toBuffer()
 
     // Create the merged image by stacking them vertically
-    await sharp({
+   const buffer = await sharp({
       create: {
         width: image1Metadata.width!,
         height: image1Metadata.height! + Math.floor((image1Metadata.width!/image2Metadata.width!)*image2Metadata.height!),
@@ -117,9 +116,9 @@ export async function mergeImagesWithWatermark(
         { input: textbuff, top:Math.floor((image1Metadata.height!)/2) , left:Math.floor((image1Metadata.width!)/2) },
         { input: phonebuff, top:Math.floor((image1Metadata.height!)/2)+Math.floor((image1Metadata.width || 50)/30), left: Math.floor((image1Metadata.width!)/2) },
       ])
-      .toFile(outputPath);
+      .toBuffer();
 
-    console.log('Image created successfully:', outputPath);
+    return buffer
   } catch (error) {
     console.error('Error merging images:', error);
   }
