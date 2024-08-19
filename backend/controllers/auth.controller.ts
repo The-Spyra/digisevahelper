@@ -116,7 +116,7 @@ export const unverifiedUserDetails = async (req: Request, res: Response) => {
 export const resendVerificationLink = (req: Request, res: Response) => {}
 
 export const verify = async (req: Request, res: Response) => {
-  const { token } = req.body
+  const { token,bannerUrl } = req.body
 
   if (!token) {
     return res.status(400).send({
@@ -133,16 +133,15 @@ export const verify = async (req: Request, res: Response) => {
       message: "No user account found",
     })
   }
+  
+   await userModel.findByIdAndUpdate(payload.id,{ verified: true,bannerUrl,bannerCreatedAt:new Date(),bannerVerfiied:true })
 
-  user.verified = true
-  const response = await userModel.updateOne({ verified: true })
-
-  if (response.modifiedCount < 1) {
-    return res.status(500).send({
-      success: false,
-      message: "Verification failed",
-    })
-  }
+  // if (response. < 1) {
+  //   return res.status(500).send({
+  //     success: false,
+  //     message: "Verification failed",
+  //   })
+  // }
 
   res.status(200).send({
     success: true,

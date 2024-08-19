@@ -59,7 +59,7 @@ const Home = () => {
           Available Services
         </h1>
         <hr className="w-[120px] bg-black text-black fill-black h-[3px] self-center" />
-        <div className="grid grid-cols-4 md:grid-cols-9 self-center gap-5 md:gap-16 mt-5 justify-evenly">
+        <div className="grid grid-cols-4 md:grid-cols-6 self-center gap-5 md:gap-16 mt-5 justify-evenly">
           {[1, 2, 3, 4, 4, 5, 6, 7, 8, 9].map(() => (
             <ServicesIcon
               imageUrl="https://lh3.googleusercontent.com/a/AEdFTp65RCG22jI1p7NzSJ4G77zOwyJ6omf4jI7BjLhb=s96-c"

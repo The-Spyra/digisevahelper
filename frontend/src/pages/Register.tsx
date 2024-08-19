@@ -40,7 +40,8 @@ const Register = () => {
     try {
       const { data } = await api.post("/auth/register", body)
       if (data.success) {
-        navigate("/verify")
+        toast.success("Verfication Link sent to the mail",{duration:3000})
+        setTimeout(()=>navigate(-1),3000)
       } else {
         toast.error(data.message)
       }
