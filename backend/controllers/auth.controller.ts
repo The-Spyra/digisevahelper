@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import userModel from "../models/user.model"
 import {
-  decryptPassword,
+  comparePassword,
   encryptPassword,
   signToken,
   verifyToken,
@@ -27,7 +27,7 @@ export const login = async (req: Request, res: Response) => {
     })
   }
 
-  const passCheck = await decryptPassword(password, user.password)
+  const passCheck = await comparePassword(password, user.password)
 
   if (!passCheck) {
     return res.status(400).send({
