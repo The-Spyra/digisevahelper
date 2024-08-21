@@ -30,20 +30,20 @@ function Navbar() {
             <path
               d="M4.16669 5.83337H15.8334"
               stroke="#33363F"
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <path
               d="M4.16669 10H15.8334"
               stroke="#33363F"
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <path
               d="M4.16669 14.1666H15.8334"
               stroke="#33363F"
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
           </svg>
         </button>
