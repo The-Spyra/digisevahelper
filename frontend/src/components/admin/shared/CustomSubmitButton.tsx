@@ -1,13 +1,19 @@
 import { HTMLProps } from "react"
+import cn from "../../../utils/cn"
 
-const CustomSubmitButton = ({ ...props }: HTMLProps<HTMLButtonElement>) => {
+const CustomSubmitButton = ({
+  className,
+  ...props
+}: HTMLProps<HTMLButtonElement> & { type: "button" | "submit" | "reset" }) => {
   return (
     <button
       {...props}
-      type="submit"
-      className="bg-custom-primary rounded-lg w-full py-2 text-white font-semibold"
+      className={cn(
+        "bg-custom-primary rounded-lg w-full py-2 text-white font-semibold",
+        className
+      )}
     >
-      Save
+      {props.children || "Save"}
     </button>
   )
 }

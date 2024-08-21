@@ -11,12 +11,17 @@ const serviceSchema = new mongoose.Schema<Service>(
       type: String,
       required: true,
     },
+    redirectUrl: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,
     },
     provided: {
       type: Boolean,
+      default: false,
     },
     documents: {
       type: [String],

@@ -4,6 +4,8 @@ interface Service {
   imageUrl: string
   redirectUrl: string
   documents: string[]
+  description: string
+  provided: boolean
   minPrice: number
   maxPrice: number
   createdAt: Date
