@@ -118,19 +118,25 @@ const UpdatePoster: FC<Props> = ({
         <DialogHeader>
           <DialogTitle>Update Poster</DialogTitle>
         </DialogHeader>
-        <ImageDropZone
-          className="outline-none"
-          setFile={setFile}
-          file={file}
-          imageUrl={poster.imageUrl}
-        />
+        <div className="flex items-center w-full">
+          <ImageDropZone
+            className="outline-none"
+            setFile={setFile}
+            file={file}
+            imageUrl={poster.imageUrl}
+          />
+        </div>
         <form
           className="flex flex-col items-center gap-2 w-full"
           onSubmit={handleSubmit(updatePoster)}
         >
           <CustomInput {...register("name")} placeholder="Name" type="text" />
           {errors.name && <p className="text-red-500">{errors.name.message}</p>}
-          {uploading ? <div>{uploadProgress}</div> : <CustomSubmitButton />}
+          {uploading ? (
+            <div>{uploadProgress}</div>
+          ) : (
+            <CustomSubmitButton type="submit" />
+          )}
         </form>
       </DialogContent>
     </Dialog>
