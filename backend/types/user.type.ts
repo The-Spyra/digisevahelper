@@ -2,7 +2,7 @@ interface User {
   _id: string
   email: string
   phone: string
-  shopName:string
+  shopName: string
   password: string
   bannerUrl: string
   watermarkUrl: string

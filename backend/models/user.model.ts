@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import User from "../types/user.d"
+import User from "../types/user.type"
 
 const userSchema = new mongoose.Schema<User>(
   {
@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema<User>(
       type: String,
       unique: true,
     },
-    shopName:{
+    shopName: {
       type: String,
     },
     password: {

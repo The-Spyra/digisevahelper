@@ -1,7 +1,7 @@
 interface Poster {
   _id: string
   name: string
-  imageUrl: String
+  imageUrl: string
   createdAt: Date
 }
 
