@@ -1,10 +1,30 @@
-import React from "react";
-import Navbar from "../components/Navbar";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react"
+import Navbar from "../components/Navbar"
+import { Link, useNavigate } from "react-router-dom"
+import api, { handleAxiosError } from "../utils/api"
+import { toast } from "sonner"
+import Poster from "../types/poster.type"
 
 function Posts() {
-  const token = false;
-  const navigate = useNavigate();
+  const token = true
+  const navigate = useNavigate()
+  const [posters, setPosters] = useState<Poster[]>([])
+
+  useEffect(() => {
+    api
+      .get("/poster")
+      .then(({ data }) => {
+        if (data.success) {
+          setPosters(data.posters)
+        } else {
+          toast.error(data.message)
+        }
+      })
+      .catch((error) => {
+        handleAxiosError(error, navigate)
+      })
+  }, [navigate])
+
   return (
     <div className="bg-[#DDE2E1] min-h-screen ">
       <Navbar />
@@ -88,14 +108,20 @@ function Posts() {
                   DOWNLOAD LINK
                 </h1>
               </div>
-              {[1, 2, 3, 4, 5, 6, 7].map((x) => (
-                <div className="w-full rounded-[100px] mt-2 md:mt-3 py-1 flex justify-between px-5 border border-black h-[30px] md:h-[50px] items-center">
+              {posters.map((e, i) => (
+                <div
+                  key={i}
+                  className="w-full rounded-[100px] mt-2 md:mt-3 py-1 flex justify-between px-5 border border-black h-[30px] md:h-[50px] items-center"
+                >
                   <h1 className="text-[13px] md:text-[30px] font-semibold text-black">
-                    POSTER NAME
+                    {e.name}
                   </h1>
-                  <button className="px-5 md:px-10 flex justify-center items-center bg-[#207C6A] text-white font-semibold rounded-[100px]">
-                    DOWNLOAD
-                  </button>
+                  <Link
+                    to={e.imageUrl}
+                    className="px-5 md:px-10 flex justify-center items-center bg-[#207C6A] text-white font-semibold rounded-[100px]"
+                  >
+                    Download
+                  </Link>
                 </div>
               ))}
             </div>
@@ -120,7 +146,7 @@ function Posts() {
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default Posts;
+export default Posts

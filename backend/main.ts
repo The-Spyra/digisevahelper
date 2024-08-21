@@ -8,6 +8,10 @@ import authRoute from "./routes/auth.route"
 import userRoute from "./routes/user.route"
 import cookies from "cookie-parser"
 import adminRoute from "./routes/admin.route"
+import serviceRoute from "./routes/service.route"
+import posterRoute from "./routes/poster.route"
+import formRoute from "./routes/form.route"
+import toolRoute from "./routes/tool.route"
 
 loadEnvFile(".env")
 connectDb()
@@ -28,6 +32,10 @@ app.use(
 app.use("/auth", authRoute)
 app.use("/user", userRoute)
 app.use("/admin", adminRoute)
+app.use("/service", serviceRoute)
+app.use("/poster", posterRoute)
+app.use("/form", formRoute)
+app.use("/tool", toolRoute)
 
 app.use(errorHandlingMiddleware)
 

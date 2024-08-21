@@ -1,10 +1,32 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
+import { useEffect, useState } from "react"
+import Navbar from "../components/Navbar"
+import Form from "../types/form.type"
+import { Link, useNavigate } from "react-router-dom"
+import api, { handleAxiosError } from "../utils/api"
+import { toast } from "sonner"
 
 function Forms() {
+  const navigate = useNavigate()
+  const [forms, setForms] = useState<Form[]>([])
+
+  useEffect(() => {
+    api
+      .get("/form")
+      .then(({ data }) => {
+        if (data.success) {
+          setForms(data.forms)
+        } else {
+          toast.error(data.message)
+        }
+      })
+      .catch((error) => {
+        handleAxiosError(error, navigate)
+      })
+  }, [navigate])
+
   return (
     <div className="bg-[#DDE2E1] min-h-screen flex flex-col">
-    <Navbar />
+      <Navbar />
       <h1 className="font-extrabold md:text-[64px] text-[26px] text-center mt-20">
         Forms
       </h1>
@@ -28,18 +50,32 @@ function Forms() {
         />
       </label>
       <div className="px-[6px] md:px-8 flex flex-col">
-        <div className='w-full rounded-[100px] mt-10 flex justify-between px-5 bg-[#1A8F78] h-[30px] md:h-[50px] items-center'>
-            <h1 className='text-[13px] md:text-[30px] font-semibold text-black'>FORM NAME</h1>
-            <h1 className='text-[13px] md:text-[30px] font-semibold text-black'>DOWNLOAD LINK</h1>
+        <div className="w-full rounded-[100px] mt-10 flex justify-between px-5 bg-[#1A8F78] h-[30px] md:h-[50px] items-center">
+          <h1 className="text-[13px] md:text-[30px] font-semibold text-black">
+            FORM NAME
+          </h1>
+          <h1 className="text-[13px] md:text-[30px] font-semibold text-black">
+            DOWNLOAD LINK
+          </h1>
         </div>
-        {[1,2,3,4,5,6,7].map((x)=>(
-            <div className='w-full rounded-[100px] mt-2 md:mt-3 flex justify-between px-5 py-2 border border-black h-[40px] md:h-[50px] items-center'>
-            <h1 className='text-[13px] md:text-[30px] font-semibold text-black'>Test</h1>
-            <button className='px-3 md:px-10 py-1 bg-[#207C6A] text-white text-[13px] font-semibold rounded-[100px]'>DOWNLOAD</button>
-        </div>
+        {forms.map((e, i) => (
+          <div
+            key={i}
+            className="w-full rounded-[100px] mt-2 md:mt-3 flex justify-between px-5 py-2 border border-black h-[40px] md:h-[50px] items-center"
+          >
+            <h1 className="text-[13px] md:text-[30px] font-semibold text-black">
+              {e.name}
+            </h1>
+            <Link
+              to={e.fileUrl}
+              className="px-3 md:px-10 py-1 bg-[#207C6A] text-white text-[13px] font-semibold rounded-[100px]"
+            >
+              DOWNLOAD
+            </Link>
+          </div>
         ))}
+      </div>
     </div>
-  </div>
   )
 }
 

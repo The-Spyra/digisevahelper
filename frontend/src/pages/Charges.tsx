@@ -1,10 +1,32 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
+import { useEffect, useState } from "react"
+import Navbar from "../components/Navbar"
+import Service from "../types/service.type"
+import { useNavigate } from "react-router-dom"
+import api, { handleAxiosError } from "../utils/api"
+import { toast } from "sonner"
 
 function Charges() {
+  const navigate = useNavigate()
+  const [services, setServices] = useState<Service[]>([])
+
+  useEffect(() => {
+    api
+      .get("/service")
+      .then(({ data }) => {
+        if (data.success) {
+          setServices(data.services)
+        } else {
+          toast.error(data.message)
+        }
+      })
+      .catch((error) => {
+        handleAxiosError(error, navigate)
+      })
+  }, [navigate])
+
   return (
     <div className="bg-[#DDE2E1] min-h-screen flex flex-col">
-    <Navbar />
+      <Navbar />
       <h1 className="font-extrabold text-[26px] md:text-[64px] text-center mt-20">
         Services Charges
       </h1>
@@ -28,18 +50,29 @@ function Charges() {
         />
       </label>
       <div className=" px-[6px] md:px-8 flex flex-col">
-        <div className='w-full rounded-[100px] mt-24 md:mt-10 flex justify-between px-5 items-center bg-[#1A8F78] h-[30px] md:h-[50px]'>
-            <h1 className=' text-[13px] md:text-[30px] font-semibold text-black'>SERVICES NAME</h1>
-            <h1 className='text-[13px] md:text-[30px] font-semibold text-black'>SERVICES CHARGES</h1>
+        <div className="w-full rounded-[100px] mt-24 md:mt-10 flex justify-between px-5 items-center bg-[#1A8F78] h-[30px] md:h-[50px]">
+          <h1 className=" text-[13px] md:text-[30px] font-semibold text-black">
+            SERVICES NAME
+          </h1>
+          <h1 className="text-[13px] md:text-[30px] font-semibold text-black">
+            SERVICES CHARGES
+          </h1>
         </div>
-        {[1,2,3,4,5,6,7].map((x)=>(
-            <div className='w-full rounded-[100px] mt-1 md:mt-3 flex justify-between items-center px-5 border border-black h-[30px] md:h-[50px]'>
-            <h1 className='text-[13px] md:text-[30px] font-semibold text-black'>SERVICES NAME</h1>
-            <h1 className='text-[13px] md:text-[30px] font-semibold text-black'>{x}</h1>
-        </div>
+        {services.map((e, i) => (
+          <div
+            key={i}
+            className="w-full rounded-[100px] mt-1 md:mt-3 flex justify-between items-center px-5 border border-black h-[30px] md:h-[50px]"
+          >
+            <h1 className="text-[13px] md:text-[30px] font-semibold text-black">
+              {e.name}
+            </h1>
+            <h1 className="text-[13px] md:text-[30px] font-semibold text-black">
+              {e.minPrice} - {e.maxPrice} ₹
+            </h1>
+          </div>
         ))}
+      </div>
     </div>
-  </div>
   )
 }
 
