@@ -26,7 +26,6 @@ const Login = () => {
     try {
       const { data } = await api.post("/auth/login", body)
       if (data.success) {
-        console.log(data)
         navigate("/")
       } else {
         toast.error(data.message)
@@ -38,7 +37,7 @@ const Login = () => {
 
   return (
     <div className="h-screen flex flex-col">
-      <Navbar/>
+      <Navbar />
       <div className="flex items-center mt-10 w-[40%]  justify-center self-center py-[80px]  bg-gradient-to-tl from-[#046350] to-[#67ECD1] rounded-xl">
         <div className="flex flex-col items-center gap-5 bg-white rounded-xl py-8  w-[80%]">
           <p className="text-4xl">Login to your account</p>
@@ -67,8 +66,18 @@ const Login = () => {
             {errors.password && (
               <p className="text-red-500">{errors.password.message}</p>
             )}
-            <button type="submit" className="self-center bg-[#2AA88F] py-2 rounded-md text-white w-full">Login</button>
-            <p className="text-[#98A2B3] text-center self-center">Didn't have an account?<Link to={"/Register"} className="text-[#2AA88F] underline">Sign Up</Link> </p>
+            <button
+              type="submit"
+              className="self-center bg-[#2AA88F] py-2 rounded-md text-white w-full"
+            >
+              Login
+            </button>
+            <p className="text-[#98A2B3] text-center self-center">
+              Didn't have an account?
+              <Link to={"/Register"} className="text-[#2AA88F] underline">
+                Sign Up
+              </Link>{" "}
+            </p>
           </form>
         </div>
       </div>
