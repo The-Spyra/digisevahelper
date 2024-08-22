@@ -85,7 +85,6 @@ const UpdateTool: FC<Props> = ({
         toast.error(data.message)
       }
     } catch (error) {
-      console.log(error)
       handleAxiosError(error, navigate)
     }
   }, [navigate, onToolDelete, tool._id])

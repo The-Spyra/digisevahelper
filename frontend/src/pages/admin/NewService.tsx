@@ -47,7 +47,6 @@ const NewService = () => {
   const provided = watch("provided")
 
   const createService = (body: formType) => {
-    console.log(body)
     if (file) {
       setUploading(true)
       const storageRef = ref(storage, `service/${body.name}`)

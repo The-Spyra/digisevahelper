@@ -87,7 +87,7 @@ const NewTool: FC<Props> = ({ children, className, onNewTool }) => {
           {errors.redirectUrl && (
             <p className="text-red-500">{errors.redirectUrl.message}</p>
           )}
-          <CustomSubmitButton />
+          <CustomSubmitButton type="submit" />
         </form>
       </DialogContent>
     </Dialog>

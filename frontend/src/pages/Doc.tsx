@@ -12,7 +12,7 @@ function Doc() {
 
   useEffect(() => {
     api
-      .get("/service")
+      .get("/service/docs")
       .then(({ data }) => {
         if (data.success) {
           setServices(data.services)

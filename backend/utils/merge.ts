@@ -42,8 +42,7 @@ export async function mergeImagesWithWatermark(
   image1Path: string,
   image2Path: string,
   name: string,
-  phone: string,
-  outputPath: string
+  phone: string
 ) {
   try {
     // Check if image2Path is a URL

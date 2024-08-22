@@ -83,6 +83,33 @@ function Posts() {
     }
   }
 
+  const downloadPoster = async (posterId: string) => {
+    try {
+      const { data } = await api.get(`/poster/download?posterId=${posterId}`)
+      const binaryString = atob(data.poster) // Decode Base64 to binary string
+      const len = binaryString.length
+      const bytes = new Uint8Array(len)
+
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i)
+      }
+
+      const blob = new Blob([bytes], { type: "image/jpeg" })
+      const url = URL.createObjectURL(blob)
+
+      const link = document.createElement("a")
+      link.href = url
+      link.download = "poster.jpg"
+      document.body.appendChild(link)
+      link.click()
+
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      handleAxiosError(error, navigate)
+    }
+  }
+
   return (
     <div className="bg-[#DDE2E1] min-h-screen pb-5">
       <Navbar />
@@ -196,12 +223,15 @@ function Posts() {
               <h1 className="text-[13px] md:text-[30px] font-semibold text-black">
                 {e.name}
               </h1>
-              <Link
-                to={e.imageUrl}
+              <button
+                onClick={(ev) => {
+                  ev.preventDefault()
+                  downloadPoster(e._id)
+                }}
                 className="px-5 md:px-10 flex justify-center items-center bg-[#207C6A] text-white font-semibold rounded-[100px]"
               >
                 Download
-              </Link>
+              </button>
             </div>
           ))}
         </div>
