@@ -1,10 +1,32 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
+import { useEffect, useState } from "react"
+import Navbar from "../components/Navbar"
+import Tool from "../types/tool.type"
+import { Link, useNavigate } from "react-router-dom"
+import api, { handleAxiosError } from "../utils/api"
+import { toast } from "sonner"
 
 function EditingTools() {
+  const navigate = useNavigate()
+  const [tools, setTools] = useState<Tool[]>([])
+
+  useEffect(() => {
+    api
+      .get("/tool")
+      .then(({ data }) => {
+        if (data.success) {
+          setTools(data.tools)
+        } else {
+          toast.error(data.message)
+        }
+      })
+      .catch((error) => {
+        handleAxiosError(error, navigate)
+      })
+  }, [navigate])
+
   return (
     <div className="bg-[#DDE2E1] min-h-screen flex flex-col">
-    <Navbar />
+      <Navbar />
       <h1 className="font-extrabold text-[26px] md:text-[64px] text-center mt-20">
         Editing Tools
       </h1>
@@ -28,18 +50,32 @@ function EditingTools() {
         />
       </label>
       <div className="px-[6px] md:px-8 flex flex-col">
-        <div className='w-full rounded-[100px] mt-10 flex justify-between px-5 bg-[#1A8F78] h-[30px] md:h-[50px] items-center'>
-            <h1 className='text-[13px] md:text-[30px] font-semibold text-black'>TOOL NAME</h1>
-            <h1 className='text-[13px] md:text-[30px] font-semibold text-black'>WEBSITE LINK</h1>
+        <div className="w-full rounded-[100px] mt-10 flex justify-between px-5 bg-[#1A8F78] h-[30px] md:h-[50px] items-center">
+          <h1 className="text-[13px] md:text-[30px] font-semibold text-black">
+            TOOL NAME
+          </h1>
+          <h1 className="text-[13px] md:text-[30px] font-semibold text-black">
+            WEBSITE LINK
+          </h1>
         </div>
-        {[1,2,3,4,5,6,7].map((x)=>(
-            <div className='w-full rounded-[100px] mt-2 md:mt-3 py-1 flex justify-between px-5 border border-black h-[30px] md:h-[50px] items-center'>
-            <h1 className='text-[13px] md:text-[30px] font-semibold text-black'>TOOL NAME</h1>
-            <a href='https://google.com' className='px-5 md:px-10 flex justify-center items-center bg-[#207C6A] text-white font-semibold rounded-[100px]'>CLICK HERE</a>
-        </div>
+        {tools.map((e, i) => (
+          <div
+            key={i}
+            className="w-full rounded-[100px] mt-2 md:mt-3 py-1 flex justify-between px-5 border border-black h-[30px] md:h-[50px] items-center"
+          >
+            <h1 className="text-[13px] md:text-[30px] font-semibold text-black">
+              {e.name}
+            </h1>
+            <Link
+              to={e.redirectUrl}
+              className="px-5 md:px-10 flex justify-center items-center bg-[#207C6A] text-white font-semibold rounded-[100px]"
+            >
+              CLICK HERE
+            </Link>
+          </div>
         ))}
+      </div>
     </div>
-  </div>
   )
 }
 

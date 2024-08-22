@@ -2,7 +2,19 @@ import { Request, Response } from "express"
 import serviceModel from "../../models/service.model"
 
 export const getAllServices = async (req: Request, res: Response) => {
-  const services = await serviceModel.find()
+  const { name, provided } = req.query
+
+  const query: any = {}
+
+  if (name) {
+    query.name = { $regex: name, $options: "i" }
+  }
+
+  if (typeof provided == "boolean") {
+    query.provided = provided
+  }
+
+  const services = await serviceModel.find(query)
 
   res.status(200).send({
     success: true,
@@ -22,7 +34,6 @@ export const createService = async (req: Request, res: Response) => {
     provided,
     maxPrice,
   } = req.body
-  console.log(req.body)
 
   if (!name || !imageUrl || !redirectUrl || !description) {
     return res.status(400).send({

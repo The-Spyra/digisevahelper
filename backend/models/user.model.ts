@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import User from "../types/user.d"
+import User from "../types/user.type"
 
 const userSchema = new mongoose.Schema<User>(
   {
@@ -12,12 +12,16 @@ const userSchema = new mongoose.Schema<User>(
       type: String,
       unique: true,
     },
-    shopName:{
+    shopName: {
       type: String,
     },
     password: {
       type: String,
       required: true,
+    },
+    blocked: {
+      type: Boolean,
+      default: false,
     },
     bannerUrl: {
       type: String,
@@ -25,9 +29,15 @@ const userSchema = new mongoose.Schema<User>(
     watermarkUrl: {
       type: String,
     },
-    bannerVerfiied: {
+    bannerVerified: {
       type: Boolean,
       default: false,
+    },
+    newBanner: {
+      type: String,
+    },
+    newBannerDate: {
+      type: Date,
     },
     watermarkVerified: {
       type: Boolean,

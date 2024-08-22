@@ -124,7 +124,11 @@ const NewForm: FC<Props> = ({ children, className, onNewForm }) => {
         >
           <CustomInput {...register("name")} placeholder="Name" type="text" />
           {errors.name && <p className="text-red-500">{errors.name.message}</p>}
-          {uploading ? <div>{uploadProgress}%</div> : <CustomSubmitButton />}
+          {uploading ? (
+            <div>{uploadProgress}%</div>
+          ) : (
+            <CustomSubmitButton type="submit" />
+          )}
         </form>
       </DialogContent>
     </Dialog>

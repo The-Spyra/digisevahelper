@@ -10,7 +10,7 @@ const formSchema = z
   .object({
     email: z.string().email({ message: "Email is invalid" }),
     shopName: z.string(),
-    phone:z.string(),
+    phone: z.string(),
     password: z.string(),
     confirmPassword: z.string(),
   })
@@ -40,8 +40,8 @@ const Register = () => {
     try {
       const { data } = await api.post("/auth/register", body)
       if (data.success) {
-        toast.success("Verfication Link sent to the mail",{duration:3000})
-        setTimeout(()=>navigate(-1),3000)
+        toast.success("Verfication Link sent to the mail", { duration: 3000 })
+        setTimeout(() => navigate(-1), 3000)
       } else {
         toast.error(data.message)
       }
@@ -111,7 +111,9 @@ const Register = () => {
               {errors.confirmPassword && (
                 <p className="text-red-500">{errors.confirmPassword.message}</p>
               )}
-              <button className="bg-[#1570EF] w-full rounded py-2 hover:bg-[#325f9f] transition-all duration-150 text-white">Create Account</button>
+              <button className="bg-[#1570EF] w-full rounded py-2 hover:bg-[#325f9f] transition-all duration-150 text-white">
+                Create Account
+              </button>
             </form>
           </div>
         </div>

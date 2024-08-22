@@ -16,32 +16,31 @@ import AdminLogin from "./pages/admin/AdminLogin"
 import AdminForms from "./pages/admin/AdminForms"
 import NewService from "./pages/admin/NewService"
 import ServiceDetails from "./pages/admin/ServiceDetails"
+import AdminUsers from "./pages/admin/AdminUsers"
 
 const App = () => {
   return (
-    <div className="pb-3 bg-[#DDE2E1]">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/doc" element={<Doc />} />
-        <Route path="/charges" element={<Charges />} />
-        <Route path="/forms" element={<Forms />} />
-        <Route path="/editing-tools" element={<EditingTools />} />
-        <Route path="/posts" element={<Posts />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/verify" element={<Verify />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin" element={<AdminRoutes />}>
-          <Route path="" element={<AdminDashboard />} />
-          <Route path="newService" element={<NewService />} />
-          <Route path="service/:id" element={<ServiceDetails />} />
-          <Route path="forms" element={<AdminForms />} />
-          <Route path="tools" element={<AdminTools />} />
-          <Route path="posters" element={<AdminPosters />} />
-        </Route>
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/doc" element={<Doc />} />
+      <Route path="/charges" element={<Charges />} />
+      <Route path="/forms" element={<Forms />} />
+      <Route path="/editing-tools" element={<EditingTools />} />
+      <Route path="/posts" element={<Posts />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/verify" element={<Verify />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin" element={<AdminRoutes />}>
+        <Route path="" element={<AdminDashboard />} />
+        <Route path="newService" element={<NewService />} />
+        <Route path="service/:id" element={<ServiceDetails />} />
+        <Route path="forms" element={<AdminForms />} />
+        <Route path="tools" element={<AdminTools />} />
+        <Route path="posters" element={<AdminPosters />} />
+        <Route path="users" element={<AdminUsers />} />
+      </Route>
+    </Routes>
   )
 }
 

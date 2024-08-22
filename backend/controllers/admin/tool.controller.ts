@@ -2,7 +2,15 @@ import { Request, Response } from "express"
 import toolModel from "../../models/tool.model"
 
 export const getAllToosl = async (req: Request, res: Response) => {
-  const tools = await toolModel.find({})
+  const { name } = req.query
+
+  const query: any = {}
+
+  if (name) {
+    query.name = { $regex: name, $options: "i" }
+  }
+
+  const tools = await toolModel.find(query)
 
   res.status(200).send({
     success: true,

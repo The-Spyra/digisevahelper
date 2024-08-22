@@ -21,11 +21,11 @@ const transporter = nodeMailer.createTransport({
   },
 })
 
-export const sendVeirificationMail = (to: string, url: string) => {
-  transporter.sendMail({
+export const sendVeirificationMail = async (to: string, url: string) => {
+  await transporter.sendMail({
     from: EMAIL,
     to,
-    subject: "",
+    subject: "DIGISEVAHELPER account verification link",
     text: `opt link: ${url}`,
   })
 }

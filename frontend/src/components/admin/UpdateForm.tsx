@@ -24,6 +24,7 @@ interface Props {
   children: ReactNode
   className?: string
   onFormUpdate: (form: Form) => void
+  onFormDelete: (id: string) => void
   form: Form
 }
 
@@ -33,8 +34,15 @@ const formSchema = z.object({
 
 type formType = z.infer<typeof formSchema>
 
-const UpdateForm: FC<Props> = ({ form, children, className, onFormUpdate }) => {
+const UpdateForm: FC<Props> = ({
+  form,
+  children,
+  className,
+  onFormUpdate,
+  onFormDelete,
+}) => {
   const navigate = useNavigate()
+  const [deleteMode, setDeleteMode] = useState(false)
   const [open, setOpen] = useState(false)
   const [file, setFile] = useState<File>()
   const [uploading, setUploading] = useState(false)
@@ -101,36 +109,105 @@ const UpdateForm: FC<Props> = ({ form, children, className, onFormUpdate }) => {
     }
   }
 
+  const deleteForm = useCallback(async () => {
+    try {
+      const { data } = await api.delete(`/admin/form/${form._id}`)
+      if (data.success) {
+        onFormDelete(form._id)
+        toast.success(data.message)
+        setOpen(false)
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      handleAxiosError(error, navigate)
+    }
+  }, [form._id, navigate, onFormDelete])
+
+  const onOpenChange = (open: boolean) => {
+    if (!open) {
+      setDeleteMode(false)
+      setFile(undefined)
+      setUploadProgress(0)
+      setUploading(false)
+    }
+
+    setOpen(open)
+  }
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger className={cn("outline-none", className)}>
         {children}
       </DialogTrigger>
       <DialogContent className="flex flex-col items-center gap-5 bg-white">
         <DialogHeader>
-          <DialogTitle>Update Form</DialogTitle>
+          <DialogTitle>
+            {deleteMode ? "Delete Form" : "Update Form"}
+          </DialogTitle>
         </DialogHeader>
-        {file ? (
-          <div className="flex flex-col items-center justify-center gap-5 bg-custom-primary text-white w-full rounded-lg h-44">
-            <FileIcon className="size-10" />
-            <p>{file.name}</p>
+        {deleteMode ? (
+          <div className="flex items-center gap-5 w-full">
+            <CustomSubmitButton
+              onClick={(e) => {
+                e.preventDefault()
+                setDeleteMode(false)
+              }}
+              type="button"
+              children="No"
+            />
+            <CustomSubmitButton
+              onClick={(e) => {
+                e.preventDefault()
+                deleteForm()
+              }}
+              type="button"
+              children="Yes"
+              className="bg-red-500"
+            />
           </div>
         ) : (
-          <FileDropZone file={file} setFile={setFile} />
+          <>
+            {file ? (
+              <div className="flex flex-col items-center justify-center gap-5 bg-custom-primary text-white w-full rounded-lg h-44">
+                <FileIcon className="size-10" />
+                <p>{file.name}</p>
+              </div>
+            ) : (
+              <FileDropZone file={file} setFile={setFile} />
+            )}
+            <form
+              className="flex flex-col items-center gap-2 w-full"
+              onSubmit={handleSubmit(updateForm)}
+            >
+              <input
+                {...register("name")}
+                placeholder="Name"
+                type="text"
+                className="outline-none border border-custom-primary rounded-lg w-full px-3 py-2"
+              />
+              {errors.name && (
+                <p className="text-red-500">{errors.name.message}</p>
+              )}
+              {uploading ? (
+                <div>{uploadProgress}&</div>
+              ) : (
+                <>
+                  <CustomSubmitButton type="button" />
+                  <CustomSubmitButton
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setDeleteMode(true)
+                    }}
+                    type="button"
+                    children="Delete"
+                    className="bg-red-500"
+                  />
+                </>
+              )}
+            </form>
+          </>
         )}
-        <form
-          className="flex flex-col items-center gap-2 w-full"
-          onSubmit={handleSubmit(updateForm)}
-        >
-          <input
-            {...register("name")}
-            placeholder="Name"
-            type="text"
-            className="outline-none border border-custom-primary rounded-lg w-full px-3 py-2"
-          />
-          {errors.name && <p className="text-red-500">{errors.name.message}</p>}
-          {uploading ? <div>{uploadProgress}&</div> : <CustomSubmitButton />}
-        </form>
       </DialogContent>
     </Dialog>
   )

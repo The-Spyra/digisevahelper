@@ -1,7 +1,36 @@
-import Navbar from "../components/Navbar";
-import ServicesIcon from "../components/ServicesIcon";
+import { useEffect, useState } from "react"
+import Navbar from "../components/Navbar"
+import ServicesIcon from "../components/ServicesIcon"
+import Service from "../types/service.type"
+import api, { handleAxiosError } from "../utils/api"
+import { toast } from "sonner"
+import { useNavigate } from "react-router-dom"
 
 const Home = () => {
+  const navigate = useNavigate()
+  const [search, setSearch] = useState("")
+  const [services, setServices] = useState<Service[]>([])
+
+  useEffect(() => {
+    const timeout = setTimeout(async () => {
+      try {
+        const { data } = await api.get(`/service?name=${search}`)
+
+        if (data.success) {
+          setServices(data.services)
+        } else {
+          toast.error(data.message)
+        }
+      } catch (error) {
+        handleAxiosError(error, navigate)
+      }
+    }, 500)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [navigate, search])
+
   return (
     <div className="bg-[#DDE2E1] min-h-screen">
       <Navbar />
@@ -11,6 +40,11 @@ const Home = () => {
         </h1>
         <label className="relative self-center flex gap-4 items-center justify-between w-[90%] md:w-[70%] px-3 py-2 bg-[#05846A8C] rounded-[100px] h-[50px]">
           <input
+            value={search}
+            onChange={(e) => {
+              e.preventDefault()
+              setSearch(e.target.value)
+            }}
             type="text"
             placeholder="Type Here"
             className="w-full placeholder:text-[#00000054]  font-semibold border-none outline-none px-2 bg-transparent"
@@ -60,17 +94,18 @@ const Home = () => {
         </h1>
         <hr className="w-[120px] bg-black text-black fill-black h-[3px] self-center" />
         <div className="grid grid-cols-4 md:grid-cols-6 self-center gap-5 md:gap-16 mt-5 justify-evenly">
-          {[1, 2, 3, 4, 4, 5, 6, 7, 8, 9].map(() => (
+          {services.map((e, i) => (
             <ServicesIcon
-              imageUrl="https://lh3.googleusercontent.com/a/AEdFTp65RCG22jI1p7NzSJ4G77zOwyJ6omf4jI7BjLhb=s96-c"
-              redirectUrl="https://google.com"
-              title="google"
+              key={i}
+              imageUrl={e.imageUrl}
+              redirectUrl={e.redirectUrl}
+              title={e.name}
             />
           ))}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

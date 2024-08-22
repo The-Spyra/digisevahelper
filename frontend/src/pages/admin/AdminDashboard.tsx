@@ -6,27 +6,37 @@ import { Link, useNavigate } from "react-router-dom"
 
 const AdminDashboard = () => {
   const navigate = useNavigate()
+  const [search, setSearch] = useState("")
   const [services, setServices] = useState<Service[]>([])
 
   useEffect(() => {
-    api
-      .get("/admin/service")
-      .then(({ data }) => {
+    const timeout = setTimeout(async () => {
+      try {
+        const { data } = await api.get(`/admin/service?name=${search}`)
         if (data.success) {
           setServices(data.services)
         } else {
           toast.error(data.message)
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         handleAxiosError(error, navigate)
-      })
-  }, [navigate])
+      }
+    }, 500)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [navigate, search])
 
   return (
     <div className="flex flex-col gap-0 h-full w-full">
       <div className="flex items-center gap-4 ">
         <input
+          value={search}
+          onChange={(e) => {
+            e.preventDefault()
+            setSearch(e.target.value)
+          }}
           type="text"
           placeholder="Search services by name"
           className="outline-none bg-custom-primary bg-opacity-50 rounded-full w-full px-3 placeholder:text-custom-secondary py-2"
@@ -51,7 +61,7 @@ const AdminDashboard = () => {
                 alt={e.name}
                 className="size-20 rounded-lg"
               />
-              <p className="text-white text-2xl">{e.name}</p>
+              <p className="text-2xl">{e.name}</p>
             </Link>
           ))}
         </div>

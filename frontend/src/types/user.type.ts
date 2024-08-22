@@ -2,10 +2,14 @@ interface User {
   _id: string
   email: string
   phone: string
+  shopName: string
   password: string
+  blocked: boolean
   bannerUrl: string
   watermarkUrl: string
-  bannerVerfiied: boolean
+  newBanner: string
+  newBannerDate: Date
+  bannerVerified: boolean
   watermarkVerified: boolean
   planExp: Date
   freetriel: boolean

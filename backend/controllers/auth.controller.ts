@@ -48,7 +48,7 @@ export const login = async (req: Request, res: Response) => {
 }
 
 export const register = async (req: Request, res: Response) => {
-  const { email, password,shopName,phone } = req.body
+  const { email, password, shopName, phone } = req.body
 
   if (!email || !password) {
     return res.status(400).send({
@@ -56,11 +56,14 @@ export const register = async (req: Request, res: Response) => {
     })
   }
 
-  const checkUser = await userModel.findOne({ email })
+  const checkUser = await userModel.findOne({ $or: [{ email }, { phone }] })
 
   if (checkUser) {
     return res.status(400).send({
-      message: "Email all ready in use",
+      message:
+        checkUser.email == email
+          ? "Email all ready in use"
+          : "Phone number all ready in use",
     })
   }
 
@@ -116,7 +119,7 @@ export const unverifiedUserDetails = async (req: Request, res: Response) => {
 export const resendVerificationLink = (req: Request, res: Response) => {}
 
 export const verify = async (req: Request, res: Response) => {
-  const { token,bannerUrl } = req.body
+  const { token, bannerUrl } = req.body
 
   if (!token) {
     return res.status(400).send({
@@ -133,8 +136,13 @@ export const verify = async (req: Request, res: Response) => {
       message: "No user account found",
     })
   }
-  
-   await userModel.findByIdAndUpdate(payload.id,{ verified: true,bannerUrl,bannerCreatedAt:new Date(),bannerVerfiied:true })
+
+  await userModel.findByIdAndUpdate(payload.id, {
+    verified: true,
+    bannerUrl,
+    bannerCreatedAt: new Date(),
+    bannerVerfiied: true,
+  })
 
   // if (response. < 1) {
   //   return res.status(500).send({

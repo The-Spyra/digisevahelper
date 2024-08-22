@@ -115,7 +115,11 @@ const NewPoster: FC<Props> = ({ children, className, onNewPoster }) => {
         >
           <CustomInput {...register("name")} placeholder="Name" type="text" />
           {errors.name && <p className="text-red-500">{errors.name.message}</p>}
-          {uploading ? <p>{uploadProgress}%</p> : <CustomSubmitButton />}
+          {uploading ? (
+            <p>{uploadProgress}%</p>
+          ) : (
+            <CustomSubmitButton type="submit" />
+          )}
         </form>
       </DialogContent>
     </Dialog>

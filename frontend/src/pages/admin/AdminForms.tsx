@@ -9,10 +9,15 @@ import { FileIcon } from "lucide-react"
 
 const AdminForms = () => {
   const navigate = useNavigate()
+  const [search, setSearch] = useState("")
   const [forms, setForms] = useState<Form[]>([])
 
   const onNewForm = (form: Form) => {
     setForms((prev) => [...prev, form])
+  }
+
+  const onFormDelete = (id: string) => {
+    setForms((prev) => prev.filter((e) => e._id != id))
   }
 
   const onFormUpdate = (form: Form) => {
@@ -22,24 +27,38 @@ const AdminForms = () => {
   }
 
   useEffect(() => {
-    api
-      .get("/admin/form")
-      .then(({ data }) => {
+    const timeout = setTimeout(async () => {
+      try {
+        const { data } = await api(`/admin/form?name=${search}`)
+
         if (data.success) {
-          setForms(data.forms)
+          if (data.success) {
+            setForms(data.forms)
+          } else {
+            toast.error(data.message)
+          }
         } else {
           toast.error(data.message)
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         handleAxiosError(error, navigate)
-      })
-  }, [navigate])
+      }
+    }, 500)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [navigate, search])
 
   return (
     <div className="flex flex-col gap-5 h-full w-full">
       <div className="flex items-center gap-4 ">
         <input
+          value={search}
+          onChange={(e) => {
+            e.preventDefault()
+            setSearch(e.target.value)
+          }}
           type="text"
           placeholder="Search services by name"
           className="outline-none bg-custom-primary bg-opacity-50 rounded-full w-full px-3 placeholder:text-custom-secondary py-2"
@@ -56,6 +75,7 @@ const AdminForms = () => {
           {forms.map((e, i) => (
             <UpdateForm
               onFormUpdate={onFormUpdate}
+              onFormDelete={onFormDelete}
               form={e}
               key={i}
               className="flex flex-col items-center text-white h-44 justify-center bg-custom-primary rounded-lg"

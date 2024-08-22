@@ -19,6 +19,10 @@ const links: { name: string; to: string }[] = [
     name: "POSTERS",
     to: "/admin/posters",
   },
+  {
+    name: "USERS",
+    to: "/admin/users",
+  },
 ]
 
 const AdminNavbar = () => {

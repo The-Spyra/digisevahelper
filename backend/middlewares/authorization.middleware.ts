@@ -40,6 +40,15 @@ const authorizationMiddleware = async (
     })
   }
 
+  if (user.blocked) {
+    res.clearCookie("token")
+    return res.status(403).send({
+      success: false,
+      message: "Account is blocked by an admin",
+      error: "blocked",
+    })
+  }
+
   next()
 }
 
