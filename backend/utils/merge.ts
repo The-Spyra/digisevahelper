@@ -42,7 +42,8 @@ export async function mergeImagesWithWatermark(
   image1Path: string,
   image2Path: string,
   name: string,
-  phone: string
+  phone: string,
+  output:string
 ) {
   try {
     // Check if image2Path is a URL
@@ -142,8 +143,10 @@ export async function mergeImagesWithWatermark(
           left: Math.floor(image1Metadata.width! / 2),
         },
       ])
-      .toBuffer()
+      .toFile(output)
   } catch (error) {
     console.error("Error merging images:", error)
   }
 }
+
+

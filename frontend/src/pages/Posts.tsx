@@ -82,30 +82,34 @@ function Posts() {
       toast.error("Please select a file")
     }
   }
+  const downloadImage = (imageUrl:string) => {
+    const link = document.createElement('a');
+    link.href = imageUrl; // The data URL
+    link.download = 'image.jpg'; // The desired file name
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
   const downloadPoster = async (posterId: string) => {
     try {
-      const { data } = await api.get(`/poster/download?posterId=${posterId}`)
-      const binaryString = atob(data.poster) // Decode Base64 to binary string
-      const len = binaryString.length
-      const bytes = new Uint8Array(len)
-
-      for (let i = 0; i < len; i++) {
-        bytes[i] = binaryString.charCodeAt(i)
-      }
-
-      const blob = new Blob([bytes], { type: "image/jpeg" })
-      const url = URL.createObjectURL(blob)
-
-      const link = document.createElement("a")
-      link.href = url
-      link.download = "poster.jpg"
-      document.body.appendChild(link)
-      link.click()
-
-      document.body.removeChild(link)
-      URL.revokeObjectURL(url)
+      const response = await api.get(`/poster/download?posterId=${posterId}`, {
+        responseType: 'arraybuffer', // Important: This tells Axios to treat the response as an ArrayBuffer
+      })
+      const data = response.data
+      console.log(data)
+      const blob = new Blob([data], { type: 'image/jpeg' });
+      const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    console.log(url)
+    link.href = url;
+    link.download = 'image.jpg'; // Desired file name
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
     } catch (error) {
+      console.log(error)
       handleAxiosError(error, navigate)
     }
   }

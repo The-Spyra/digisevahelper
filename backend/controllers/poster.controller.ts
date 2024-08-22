@@ -4,6 +4,7 @@ import { mergeImagesWithWatermark } from "../utils/merge"
 import { verifyToken } from "../utils/auth"
 import userModel from "../models/user.model"
 import fs from "fs"
+import {v4} from "uuid"
 
 export const getAllPosters = async (req: Request, res: Response) => {
   const { name } = req.query
@@ -70,24 +71,26 @@ export const downloadPoster = async (req: Request, res: Response) => {
       message: "Poster not found",
     })
   }
-
-  const result = await mergeImagesWithWatermark(
+  //  result is buffer
+  const output = "./"+v4()+".jpg"
+   await mergeImagesWithWatermark(
     poster.imageUrl,
     user.bannerUrl,
     user.shopName,
-    user.phone
+    user.phone,
+    output
   )
-
+  const result = fs.readFileSync(output)
+  fs.unlinkSync(output)
+  
   if (!result) {
     return res.status(400).send({
       success: false,
       message: "Fialed to merge poster",
     })
   }
+  console.log(result)
 
-  res.status(200).send({
-    success: true,
-    message: "Poster fetched successfully",
-    poster: result.toString("base64"),
-  })
+  
+  await res.status(200).send(result)
 }
