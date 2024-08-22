@@ -19,15 +19,25 @@ const userSchema = new mongoose.Schema<User>(
       type: String,
       required: true,
     },
+    blocked: {
+      type: Boolean,
+      default: false,
+    },
     bannerUrl: {
       type: String,
     },
     watermarkUrl: {
       type: String,
     },
-    bannerVerfiied: {
+    bannerVerified: {
       type: Boolean,
       default: false,
+    },
+    newBanner: {
+      type: String,
+    },
+    newBannerDate: {
+      type: Date,
     },
     watermarkVerified: {
       type: Boolean,

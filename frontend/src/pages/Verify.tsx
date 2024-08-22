@@ -3,62 +3,53 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 import api, { handleAxiosError } from "../utils/api"
 import { toast } from "sonner"
 import Navbar from "../components/Navbar"
-import { z } from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod/src/zod.js"
+import { storage } from "../utils/firebase"
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
+import User from "../types/user.type"
 
-import { firebaseConfig, storage } from "../utils/firebase"
+const uploadImage = async (file: File, email: string) => {
+  const storageRef = ref(storage, `banners/${email.split("@")[0]}`)
+  const uploadTask = uploadBytesResumable(storageRef, file)
 
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
-// Function to upload file
-const uploadImage = async(file: File,email:string) => {
-  // Create a storage reference
-  const storageRef = ref(storage, `banners/${email}`);
-  console.log(file)
-  // Upload the file
-  const uploadTask = uploadBytesResumable(storageRef, file);
-
-  // Monitor upload progress
   uploadTask.on(
     "state_changed",
     (snapshot) => {
-      // Progress monitoring
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log(`Upload is ${progress}% done`);
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      console.log(`Upload is ${Math.floor(progress)}% done`)
     },
     (error) => {
-      // Handle unsuccessful uploads
-      console.error("Error uploading file:", error);
+      console.error("Error uploading file:", error)
     }
-  );
-  const url =await getDownloadURL(uploadTask.snapshot.ref)
+  )
+  const url = await getDownloadURL(uploadTask.snapshot.ref)
   return url
-};
-
+}
 
 const Verify = () => {
   const [params] = useSearchParams()
   const token = params.get("token")
-  const [user, setUser] = useState<any>()
-  const [banner, setBanner] = useState<any>()
+  const [user, setUser] = useState<User>()
+  const [banner, setBanner] = useState<File>()
   const navigate = useNavigate()
 
   const [loading, setLoading] = useState(false)
   const submit = async () => {
-    try {
-      const res =await uploadImage(banner,user.email)
-      console.log(res, "hello")
-      const { data } = await api.post("/auth/verify", {bannerUrl:res,token})
-      if (data.success) {
-        toast.success("Account is Verfied", { duration: 3000 })
-        setTimeout(() => navigate("/login"), 3000)
-      } else {
-        toast.error(data.message)
+    if (user && banner)
+      try {
+        const res = await uploadImage(banner, user.email)
+        const { data } = await api.post("/auth/verify", {
+          bannerUrl: res,
+          token,
+        })
+        if (data.success) {
+          toast.success("Account is Verfied", { duration: 3000 })
+          setTimeout(() => navigate("/login"), 3000)
+        } else {
+          toast.error(data.message)
+        }
+      } catch (error) {
+        handleAxiosError(error, navigate)
       }
-    } catch (error) {
-      handleAxiosError(error, navigate)
-    }
   }
 
   useEffect(() => {
@@ -68,7 +59,6 @@ const Verify = () => {
         .post("/auth/unverifiedUser", { token })
         .then(({ data }) => {
           if (data.success) {
-            console.log(data)
             setUser(data.user)
           } else {
             toast.error(data.message)
@@ -143,7 +133,7 @@ const Verify = () => {
                   type="file"
                   className="hidden"
                 />
-                Click here to upload
+                {banner ? banner.name : "Click here to upload"}
               </label>
               <div className="flex gap-5 items-center justify-evenly mt-5">
                 <button
