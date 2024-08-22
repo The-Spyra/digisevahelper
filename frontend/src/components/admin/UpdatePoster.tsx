@@ -24,6 +24,7 @@ interface Props {
   children: ReactNode
   className?: string
   onPosterUpdate: (poster: Poster) => void
+  onPosterDelete: (id: string) => void
   poster: Poster
 }
 
@@ -37,9 +38,11 @@ const UpdatePoster: FC<Props> = ({
   children,
   className,
   onPosterUpdate,
+  onPosterDelete,
   poster,
 }) => {
   const navigate = useNavigate()
+  const [deleteMode, setDeleteMode] = useState(false)
   const [open, setOpen] = useState(false)
   const [file, setFile] = useState<File>()
   const [uploading, setUploading] = useState(false)
@@ -63,6 +66,7 @@ const UpdatePoster: FC<Props> = ({
         if (data.success) {
           onPosterUpdate(data.poster)
           toast.success(data.message)
+          onOpenChange(false)
         } else {
           toast.error(data.message)
         }
@@ -82,8 +86,9 @@ const UpdatePoster: FC<Props> = ({
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress =
+          const progress = Math.floor(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          )
           setUploadProgress(progress)
         },
         (error) => {
@@ -104,10 +109,28 @@ const UpdatePoster: FC<Props> = ({
   const onOpenChange = (open: boolean) => {
     if (!open) {
       setFile(undefined)
+      setUploading(false)
+      setUploadProgress(0)
+      setDeleteMode(false)
     }
 
     setOpen(open)
   }
+
+  const deletePoster = useCallback(async () => {
+    try {
+      const { data } = await api.delete(`/admin/poster/${poster._id}`)
+      if (data.success) {
+        onPosterDelete(poster._id)
+        toast.success(data.message)
+        setOpen(false)
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      handleAxiosError(error, navigate)
+    }
+  }, [poster._id, onPosterDelete, navigate])
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -118,26 +141,67 @@ const UpdatePoster: FC<Props> = ({
         <DialogHeader>
           <DialogTitle>Update Poster</DialogTitle>
         </DialogHeader>
-        <div className="flex items-center w-full">
-          <ImageDropZone
-            className="outline-none"
-            setFile={setFile}
-            file={file}
-            imageUrl={poster.imageUrl}
-          />
-        </div>
-        <form
-          className="flex flex-col items-center gap-2 w-full"
-          onSubmit={handleSubmit(updatePoster)}
-        >
-          <CustomInput {...register("name")} placeholder="Name" type="text" />
-          {errors.name && <p className="text-red-500">{errors.name.message}</p>}
-          {uploading ? (
-            <div>{uploadProgress}</div>
-          ) : (
-            <CustomSubmitButton type="submit" />
-          )}
-        </form>
+        {deleteMode ? (
+          <div className="flex items-center gap-5 w-full">
+            <CustomSubmitButton
+              onClick={(e) => {
+                e.preventDefault()
+                setDeleteMode(false)
+              }}
+              type="button"
+              children="No"
+            />
+            <CustomSubmitButton
+              onClick={(e) => {
+                e.preventDefault()
+                deletePoster()
+              }}
+              type="button"
+              children="Yes"
+              className="bg-red-500"
+            />
+          </div>
+        ) : (
+          <>
+            <div className="flex items-center w-full">
+              <ImageDropZone
+                className="outline-none"
+                setFile={setFile}
+                file={file}
+                imageUrl={poster.imageUrl}
+              />
+            </div>
+            <form
+              className="flex flex-col items-center gap-2 w-full"
+              onSubmit={handleSubmit(updatePoster)}
+            >
+              <CustomInput
+                {...register("name")}
+                placeholder="Name"
+                type="text"
+              />
+              {errors.name && (
+                <p className="text-red-500">{errors.name.message}</p>
+              )}
+              {uploading ? (
+                <div>{uploadProgress}</div>
+              ) : (
+                <>
+                  <CustomSubmitButton type="submit" />
+                  <CustomSubmitButton
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setDeleteMode(true)
+                    }}
+                    type="button"
+                    children="Delete"
+                    className="bg-red-500"
+                  />
+                </>
+              )}
+            </form>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   )

@@ -23,6 +23,7 @@ const ServiceDetails = () => {
   const [service, setService] = useState<Service>()
   const [file, setFile] = useState<File>()
 
+  const [deleteMode, setDeleteMode] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
   const [error, setError] = useState("")
@@ -51,7 +52,6 @@ const ServiceDetails = () => {
 
   useEffect(() => {
     if (service) {
-      console.log(service)
       setValue("name", service.name)
       setValue("description", service.description)
       setValue("documents", service.documents)
@@ -93,7 +93,6 @@ const ServiceDetails = () => {
   }
 
   const updateService = (body: formType) => {
-    console.log(body)
     if (file) {
       setUploading(true)
       const storageRef = ref(storage, `service/${body.name}`)
@@ -121,8 +120,53 @@ const ServiceDetails = () => {
     }
   }
 
+  const deleteService = async () => {
+    if (!service) {
+      navigate(-1)
+      return
+    }
+
+    try {
+      const { data } = await api.delete(`/admin/service/${service._id}`)
+      if (data.success) {
+        navigate(-1)
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      handleAxiosError(error, navigate)
+    }
+  }
+
+  if (deleteMode) {
+    return (
+      <div className="flex flex-col gap-10 items-center justify-center h-full w-full">
+        <p className="text-4xl">Delete Service ?</p>
+        <div className="flex items-center gap-5 w-[50%]">
+          <CustomSubmitButton
+            onClick={(e) => {
+              e.preventDefault()
+              setDeleteMode(false)
+            }}
+            type="button"
+            children="No"
+          />
+          <CustomSubmitButton
+            onClick={(e) => {
+              e.preventDefault()
+              deleteService()
+            }}
+            type="button"
+            children="Yes"
+            className="bg-red-500"
+          />
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex flex-col items-center h-full w-full">
+    <div className="flex flex-col items-center justify-center h-full w-full">
       <form
         className="flex flex-col items-center justify-between w-full h-full pb-10"
         onSubmit={handleSubmit(updateService)}
@@ -217,17 +261,29 @@ const ServiceDetails = () => {
         {uploading ? (
           <div>{uploadProgress}% uploaded</div>
         ) : (
-          <div className="flex items-center gap-5 w-full">
+          <div className="flex flex-col items-center gap-5 w-full">
+            <div className="flex items-center gap-5 w-full">
+              <CustomSubmitButton
+                onClick={(e) => {
+                  e.preventDefault()
+                  navigate(-1)
+                }}
+                type="button"
+                children="Cancel"
+                className="bg-red-500"
+              />
+              <CustomSubmitButton type="submit" />
+            </div>
+
             <CustomSubmitButton
               onClick={(e) => {
                 e.preventDefault()
-                navigate(-1)
+                setDeleteMode(true)
               }}
               type="button"
-              children="Cancel"
+              children="Delete"
               className="bg-red-500"
             />
-            <CustomSubmitButton type="submit" />
           </div>
         )}
       </form>
