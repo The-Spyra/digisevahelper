@@ -34,7 +34,6 @@ export const createService = async (req: Request, res: Response) => {
     provided,
     maxPrice,
   } = req.body
-  console.log(req.body)
 
   if (!name || !imageUrl || !redirectUrl || !description) {
     return res.status(400).send({

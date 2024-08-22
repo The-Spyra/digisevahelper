@@ -8,22 +8,28 @@ import { useNavigate } from "react-router-dom"
 
 const Home = () => {
   const navigate = useNavigate()
+  const [search, setSearch] = useState("")
   const [services, setServices] = useState<Service[]>([])
 
   useEffect(() => {
-    api
-      .get("/service")
-      .then(({ data }) => {
+    const timeout = setTimeout(async () => {
+      try {
+        const { data } = await api.get(`/service?name=${search}`)
+
         if (data.success) {
           setServices(data.services)
         } else {
           toast.error(data.message)
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         handleAxiosError(error, navigate)
-      })
-  }, [navigate])
+      }
+    }, 500)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [navigate, search])
 
   return (
     <div className="bg-[#DDE2E1] min-h-screen">
@@ -34,6 +40,11 @@ const Home = () => {
         </h1>
         <label className="relative self-center flex gap-4 items-center justify-between w-[90%] md:w-[70%] px-3 py-2 bg-[#05846A8C] rounded-[100px] h-[50px]">
           <input
+            value={search}
+            onChange={(e) => {
+              e.preventDefault()
+              setSearch(e.target.value)
+            }}
             type="text"
             placeholder="Type Here"
             className="w-full placeholder:text-[#00000054]  font-semibold border-none outline-none px-2 bg-transparent"
