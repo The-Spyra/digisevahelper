@@ -61,7 +61,7 @@ const AdminLogin = () => {
           {errors.password && (
             <p className="text-red-500">{errors.password.message}</p>
           )}
-          <CustomSubmitButton />
+          <CustomSubmitButton type="submit" />
         </form>
       </div>
     </div>

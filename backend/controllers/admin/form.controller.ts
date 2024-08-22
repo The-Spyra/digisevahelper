@@ -1,8 +1,16 @@
 import { Request, Response } from "express"
 import formModel from "../../models/form.model"
 
-export const getAllForm = async (_req: Request, res: Response) => {
-  const forms = await formModel.find()
+export const getAllForm = async (req: Request, res: Response) => {
+  const { name } = req.query
+
+  const query: any = {}
+
+  if (name) {
+    query.name = { $regex: name, $options: "i" }
+  }
+
+  const forms = await formModel.find(query)
 
   res.status(200).send({
     success: true,

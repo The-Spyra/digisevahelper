@@ -2,7 +2,15 @@ import { Request, Response } from "express"
 import posterModel from "../../models/poster.model"
 
 export const getAllPosters = async (req: Request, res: Response) => {
-  const posters = await posterModel.find()
+  const { name } = req.query
+
+  const query: any = {}
+
+  if (name) {
+    query.name = { $regex: name, $options: "i" }
+  }
+
+  const posters = await posterModel.find(query)
 
   res.status(200).send({
     success: true,

@@ -8,10 +8,15 @@ import UpdateTool from "../../components/admin/UpdateTool"
 
 const AdminTools = () => {
   const navigate = useNavigate()
+  const [search, setSearch] = useState("")
   const [tools, setTools] = useState<Tool[]>([])
 
   const onNewTool = (tool: Tool) => {
     setTools((prev) => [...prev, tool])
+  }
+
+  const onToolDelete = (id: string) => {
+    setTools((prev) => prev.filter((e) => e._id != id))
   }
 
   const onToolUpdate = (tool: Tool) => {
@@ -21,24 +26,33 @@ const AdminTools = () => {
   }
 
   useEffect(() => {
-    api
-      .get("/admin/tool")
-      .then(({ data }) => {
+    const timeout = setTimeout(async () => {
+      try {
+        const { data } = await api.get(`/admin/tool?name=${search}`)
         if (data.success) {
           setTools(data.tools)
         } else {
-          toast.error(data.message)
+          toast.error(data.name)
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         handleAxiosError(error, navigate)
-      })
-  }, [navigate])
+      }
+    }, 500)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [navigate, search])
 
   return (
     <div className="flex flex-col gap-5 h-full w-full">
       <div className="flex items-center gap-4 ">
         <input
+          value={search}
+          onChange={(e) => {
+            e.preventDefault()
+            setSearch(e.target.value)
+          }}
           type="text"
           placeholder="Search services by name"
           className="outline-none bg-custom-primary bg-opacity-50 rounded-full w-full px-3 placeholder:text-custom-secondary py-2"
@@ -56,10 +70,12 @@ const AdminTools = () => {
             <UpdateTool
               key={i}
               tool={e}
-              className="bg-custom-primary rounded-xl h-44"
+              className="bg-custom-primary rounded-xl h-20 "
               onToolUpdate={onToolUpdate}
+              onToolDelete={onToolDelete}
             >
-              {e.name}
+              <p className="text-xl">{e.name}</p>
+              <p>{e.redirectUrl}</p>
             </UpdateTool>
           ))}
         </div>
