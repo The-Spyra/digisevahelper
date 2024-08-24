@@ -88,7 +88,76 @@ export const getServiceDetails = async (req: Request, res: Response) => {
   })
 }
 
-export const updateService = async (req: Request, res: Response) => {}
+export const updateService = async (req: Request, res: Response) => {
+  const {
+    name,
+    imageUrl,
+    redirectUrl,
+    documents,
+    description,
+    minPrice,
+    provided,
+    maxPrice,
+  } = req.body
+  const { id } = req.params
+
+  if (!id) {
+    return res.status(400).send({
+      success: false,
+      message: "Service id not provided",
+    })
+  }
+
+  const service = await serviceModel.findById(id)
+
+  if (!service) {
+    return res.status(400).send({
+      success: false,
+      message: "Service not found",
+    })
+  }
+
+  if (name) {
+    service.name = name
+  }
+
+  if (redirectUrl) {
+    service.redirectUrl = redirectUrl
+  }
+
+  if (documents) {
+    service.documents = documents
+  }
+
+  if (description) {
+    service.description = description
+  }
+
+  if (typeof provided == "boolean") {
+    service.provided = provided
+
+    if (provided) {
+      if (typeof minPrice == "number") {
+        service.minPrice = minPrice
+      }
+
+      if (typeof maxPrice == "number") {
+        service.maxPrice = maxPrice
+      }
+    } else {
+      service.minPrice = 0
+      service.maxPrice = 0
+    }
+  }
+
+  await service.save()
+
+  res.status(200).send({
+    success: true,
+    message: "Service updated successfully",
+    service,
+  })
+}
 
 export const deleteService = async (req: Request, res: Response) => {
   const { id } = req.params
