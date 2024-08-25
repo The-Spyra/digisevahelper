@@ -17,6 +17,7 @@ import AdminForms from "./pages/admin/AdminForms"
 import NewService from "./pages/admin/NewService"
 import ServiceDetails from "./pages/admin/ServiceDetails"
 import AdminUsers from "./pages/admin/AdminUsers"
+import PaymentPlans from "./pages/Payment"
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/verify" element={<Verify />} />
       <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="payment" element={<PaymentPlans />} />
       <Route path="/admin" element={<AdminRoutes />}>
         <Route path="" element={<AdminDashboard />} />
         <Route path="newService" element={<NewService />} />
