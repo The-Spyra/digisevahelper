@@ -13,6 +13,7 @@ import posterRoute from "./routes/poster.route"
 import formRoute from "./routes/form.route"
 import toolRoute from "./routes/tool.route"
 import authorizationMiddleware from "./middlewares/authorization.middleware"
+import paymentRoute from "./routes/payment.route"
 
 loadEnvFile(".env")
 connectDb()
@@ -37,6 +38,7 @@ app.use("/service", serviceRoute)
 app.use("/poster", authorizationMiddleware, posterRoute)
 app.use("/form", authorizationMiddleware, formRoute)
 app.use("/tool", authorizationMiddleware, toolRoute)
+app.use("/payment", authorizationMiddleware, paymentRoute)
 
 app.use(errorHandlingMiddleware)
 

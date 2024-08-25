@@ -1,7 +1,8 @@
 import { Request, Response } from "express"
 import { verifyToken } from "../utils/auth"
 import userModel from "../models/user.model"
-import { EventEmitterAsyncResource } from "nodemailer/lib/xoauth2"
+import { plans } from "../models/plan.model"
+import razorpay from "../utils/razorpay"
 
 export const getUserDetails = async (req: Request, res: Response) => {
   const token = req.cookies.token

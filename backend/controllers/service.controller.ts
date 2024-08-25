@@ -46,6 +46,7 @@ export const getServiceCharges = async (req: Request, res: Response) => {
     query.name = { $regex: name, $options: "i" }
   }
 
+  console.log(query)
   const services = await serviceModel.find(query)
 
   res.status(200).send({

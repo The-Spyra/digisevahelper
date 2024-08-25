@@ -29,6 +29,10 @@ export const handleAxiosError = (
       navigate("/admin/login")
     }
 
+    if (error.response?.data.error == "subscription") {
+      navigate("/payment")
+    }
+
     if (error.response?.data.message) {
       toast.error(error.response.data.message)
     } else {

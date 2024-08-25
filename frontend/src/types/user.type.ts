@@ -11,6 +11,7 @@ interface User {
   newBannerDate: Date
   bannerVerified: boolean
   watermarkVerified: boolean
+  planType: string
   planExp: Date
   freetriel: boolean
   trielExpiry: Date

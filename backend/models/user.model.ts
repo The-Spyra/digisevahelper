@@ -43,6 +43,10 @@ const userSchema = new mongoose.Schema<User>(
       type: Boolean,
       default: false,
     },
+    planType: {
+      type: String,
+      enum: ["plan1", "plan2", "plan3"],
+    },
     planExp: {
       type: Date,
     },

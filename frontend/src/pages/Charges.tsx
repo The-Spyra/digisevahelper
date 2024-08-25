@@ -11,8 +11,9 @@ function Charges() {
 
   useEffect(() => {
     api
-      .get("/service")
+      .get("/service/charges")
       .then(({ data }) => {
+        console.log(data)
         if (data.success) {
           setServices(data.services)
         } else {

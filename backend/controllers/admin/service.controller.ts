@@ -133,6 +133,10 @@ export const updateService = async (req: Request, res: Response) => {
     service.description = description
   }
 
+  if (imageUrl) {
+    service.imageUrl = imageUrl
+  }
+
   if (typeof provided == "boolean") {
     service.provided = provided
 

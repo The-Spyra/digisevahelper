@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import userModel from "../../models/user.model"
+import { plans } from "../../models/plan.model"
 
 export const getAllUsers = async (req: Request, res: Response) => {
   const { name } = req.query
