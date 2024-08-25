@@ -34,7 +34,7 @@ const subscriptionValidation = (access: "service" | "full") => {
     if (access == "full" && !["plan3", "plan2"].includes(user.planType)) {
       return res.status(400).send({
         success: false,
-        message: "Subscription plan doesnt have required feature",
+        message: "This feature is not available on your current plan",
         error: "subscription",
       })
     }
