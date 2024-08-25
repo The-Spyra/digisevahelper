@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { z } from "zod"
 import { useForm, useFieldArray } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -77,22 +77,24 @@ const ServiceDetails = () => {
       })
   }, [id, navigate, setValue])
 
-  const putApiCall = (body: formType & { imageUrl?: string }) => {
-    api
-      .post("/admin/service", body)
-      .then(({ data }) => {
+  const putApiCall = useCallback(
+    async (body: formType & { imageUrl?: string }) => {
+      try {
+        const { data } = await api.put(`/admin/service/${id}`, body)
         if (data.success) {
           navigate(-1)
         } else {
           toast.error(data.message)
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         handleAxiosError(error, navigate)
-      })
-  }
+      }
+    },
+    [navigate, id]
+  )
 
   const updateService = (body: formType) => {
+    console.log(body)
     if (file) {
       setUploading(true)
       const storageRef = ref(storage, `service/${body.name}`)
@@ -103,7 +105,7 @@ const ServiceDetails = () => {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          setUploadProgress(progress)
+          setUploadProgress(Math.floor(progress))
         },
         (error) => {
           console.log("Upload failed: ", error)
@@ -207,7 +209,6 @@ const ServiceDetails = () => {
                 <CustomInput
                   {...register("minPrice", { valueAsNumber: true })}
                   type="number"
-                  className="Min price"
                 />
                 <p>Max</p>
                 <CustomInput
@@ -216,7 +217,6 @@ const ServiceDetails = () => {
                     setValueAs: (val) => (isNaN(val) ? 0 : parseInt(val)),
                   })}
                   type="number"
-                  className="Max price"
                 />
               </div>
             )}
@@ -255,6 +255,9 @@ const ServiceDetails = () => {
                   />
                 </div>
               ))}
+              {errors.documents && (
+                <p className="text-red-500">{errors.documents.message}</p>
+              )}
             </div>
           </div>
         </div>

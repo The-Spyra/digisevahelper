@@ -14,7 +14,7 @@ adminServiceRoute.route("/").get(getAllServices).post(createService)
 adminServiceRoute
   .route("/:id")
   .get(getServiceDetails)
-  .patch(updateService)
+  .put(updateService)
   .delete(deleteService)
 
 export default adminServiceRoute
