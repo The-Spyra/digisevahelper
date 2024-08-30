@@ -26,7 +26,7 @@ const ServiceDetails = () => {
   const [deleteMode, setDeleteMode] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
-  const [error, setError] = useState("")
+  const [_error, setError] = useState("")
 
   const {
     register,
@@ -45,7 +45,7 @@ const ServiceDetails = () => {
     },
   })
   const provided = watch("provided")
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove } = useFieldArray<any>({
     control,
     name: "documents",
   })

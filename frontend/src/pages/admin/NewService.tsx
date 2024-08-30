@@ -21,7 +21,7 @@ const NewService = () => {
 
   const [uploading, setUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
-  const [error, setError] = useState("")
+  const [_error, setError] = useState("")
 
   const {
     register,
@@ -39,7 +39,7 @@ const NewService = () => {
     },
   })
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove } = useFieldArray<any>({
     control,
     name: "documents",
   })

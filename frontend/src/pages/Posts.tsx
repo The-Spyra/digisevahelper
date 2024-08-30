@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
-import { Link, useNavigate } from "react-router-dom"
+import {  useNavigate } from "react-router-dom"
 import Poster from "../types/poster.type"
 import api, { handleAxiosError } from "../utils/api"
 import { toast } from "sonner"
@@ -82,14 +82,7 @@ function Posts() {
       toast.error("Please select a file")
     }
   }
-  const downloadImage = (imageUrl:string) => {
-    const link = document.createElement('a');
-    link.href = imageUrl; // The data URL
-    link.download = 'image.jpg'; // The desired file name
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
+
 
   const downloadPoster = async (posterId: string) => {
     try {
