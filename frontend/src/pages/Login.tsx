@@ -38,12 +38,12 @@ const Login = () => {
   return (
     <div className="h-screen flex flex-col">
       <Navbar />
-      <div className="flex items-center mt-10 w-[40%]  justify-center self-center py-[80px]  bg-gradient-to-tl from-[#046350] to-[#67ECD1] rounded-xl">
+      <div className="flex items-center mt-10 w-full md:w-[40%]  justify-center self-center py-[80px]  bg-gradient-to-tl from-[#046350] to-[#67ECD1] rounded-xl">
         <div className="flex flex-col items-center gap-5 bg-white rounded-xl py-8  w-[80%]">
-          <p className="text-4xl">Login to your account</p>
+          <p className="text-2xl md:text-4xl">Login to your account</p>
           <form
             onSubmit={handleSubmit(submit)}
-            className="flex flex-col w-full items-start px-[100px] py-3  gap-2"
+            className="flex flex-col w-full items-start px-5 md:px-[100px] py-3  gap-2"
           >
             <label htmlFor="">Email</label>
             <input

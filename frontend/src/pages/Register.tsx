@@ -54,9 +54,9 @@ const Register = () => {
     <div className=" min-h-screen">
       <Navbar />
       <div className="flex flex-col items-center justify-center h-full py-10">
-        <div className="w-[40%] p-[55px] bg-gradient-to-tl from-[#046350] to-[#67ECD1] shadow-xl rounded-xl">
+        <div className="md:w-[40%] p-[55px] bg-gradient-to-tl from-[#046350] to-[#67ECD1] shadow-xl rounded-xl">
           <div className="flex flex-col items-center gap-5 bg-white rounded-xl px-[36px] py-8">
-            <p className="text-4xl">Create an account</p>
+            <p className="text-2xl md:text-4xl">Create an account</p>
             <form
               className="flex flex-col gap-3 w-full"
               onSubmit={handleSubmit(submit)}
