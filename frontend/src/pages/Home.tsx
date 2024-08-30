@@ -62,33 +62,7 @@ const Home = () => {
             />
           </svg>
         </label>
-        <h1 className="text-center mt-10 text-[30px] font-semibold ">
-          Recents
-        </h1>
-        <hr className="w-[60px] bg-black text-black fill-black h-[3px] self-center" />
-        <div className="flex justify-between w-[90%] md:w-[50%] self-center mt-5 items-center gap-3">
-          <ServicesIcon
-            imageUrl="https://lh3.googleusercontent.com/a/AEdFTp65RCG22jI1p7NzSJ4G77zOwyJ6omf4jI7BjLhb=s96-c"
-            redirectUrl="https://google.com"
-            title="google"
-          />
-          <ServicesIcon
-            imageUrl="https://lh3.googleusercontent.com/a/AEdFTp65RCG22jI1p7NzSJ4G77zOwyJ6omf4jI7BjLhb=s96-c"
-            redirectUrl="https://google.com"
-            title="google"
-          />
-          <ServicesIcon
-            imageUrl="https://lh3.googleusercontent.com/a/AEdFTp65RCG22jI1p7NzSJ4G77zOwyJ6omf4jI7BjLhb=s96-c"
-            redirectUrl="https://google.com"
-            title="google"
-          />
-          <ServicesIcon
-            imageUrl="https://lh3.googleusercontent.com/a/AEdFTp65RCG22jI1p7NzSJ4G77zOwyJ6omf4jI7BjLhb=s96-c"
-            redirectUrl="https://google.com"
-            title="google"
-          />
-        </div>
-        <hr className="w-[60%] mt-5 bg-black text-black fill-black h-[1px] self-center" />
+        
         <h1 className="text-center mt-10 text-[30px] font-semibold ">
           Available Services
         </h1>
