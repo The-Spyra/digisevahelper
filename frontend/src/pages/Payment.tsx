@@ -3,7 +3,7 @@ import useRazorpay from "react-razorpay"
 import api, { handleAxiosError } from "../utils/api"
 import { toast } from "sonner"
 import { useUser } from "../context/userContext"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const PaymentPlans = () => {
   const [Razorpay] = useRazorpay()
@@ -99,9 +99,15 @@ const PaymentPlans = () => {
   ]
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <Navbar />
-      <div className="flex justify-center items-center gap-8 p-8 bg-white">
+      <div className="flex flex-col items-center py-10">
+        <p className="text-6xl font-semibold text-custom-primary">Plans</p>
+        <Link to={"/terms-and-condition"} className="text-gray-500">
+          Terms and Conditions
+        </Link>
+      </div>
+      <div className="flex flex-col md:flex-row justify-center items-center gap-8 p-8 bg-white">
         {plans.map((plan, index) => (
           <div
             key={index}

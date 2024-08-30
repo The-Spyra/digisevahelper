@@ -18,6 +18,7 @@ import NewService from "./pages/admin/NewService"
 import ServiceDetails from "./pages/admin/ServiceDetails"
 import AdminUsers from "./pages/admin/AdminUsers"
 import PaymentPlans from "./pages/Payment"
+import TermsAndCondition from "./pages/TermsAndCondition"
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
       <Route path="/verify" element={<Verify />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="payment" element={<PaymentPlans />} />
+      <Route path="/terms-and-condition" element={<TermsAndCondition />} />
       <Route path="/admin" element={<AdminRoutes />}>
         <Route path="" element={<AdminDashboard />} />
         <Route path="newService" element={<NewService />} />
