@@ -38,30 +38,34 @@ const Login = () => {
   return (
     <div className="h-screen flex flex-col">
       <Navbar />
-      <div className="flex items-center mt-10 w-full md:w-[40%]  justify-center self-center py-[80px]  bg-gradient-to-tl from-[#046350] to-[#67ECD1] rounded-xl">
-        <div className="flex flex-col items-center gap-5 bg-white rounded-xl py-8  w-[80%]">
+      <div className="flex items-center mt-10 md:w-[40%] justify-center self-center py-6 md:py-[80px]  bg-gradient-to-tl from-[#046350] to-[#67ECD1] rounded-xl">
+        <div className="flex flex-col items-center justify-center gap-5 bg-white rounded-xl py-8 px-5 w-[80%]">
           <p className="text-2xl md:text-4xl">Login to your account</p>
           <form
             onSubmit={handleSubmit(submit)}
-            className="flex flex-col w-full items-start px-5 md:px-[100px] py-3  gap-2"
+            className="flex flex-col w-full items-center px-5 md:px-[100px] py-3 gap-2"
           >
-            <label htmlFor="">Email</label>
+            <label className="hidden md:block" htmlFor="">
+              Email
+            </label>
             <input
               {...register("email")}
               placeholder="Email"
               type="text"
-              className="outline-none border-2 w-full px-1 py-[12px] rounded"
+              className="outline-none border-2 w-full px-1 py-1 md:py-[12px] rounded"
             />
             {errors.email && (
               <p className="text-red-500">{errors.email.message}</p>
             )}
-            <label htmlFor="">Password</label>
+            <label className="hidden md:block" htmlFor="">
+              Password
+            </label>
 
             <input
               {...register("password")}
               placeholder="Password"
               type="password"
-              className="outline-none border-2 w-full px-1 py-[12px]  rounded"
+              className="outline-none border-2 w-full px-1 py-1 md:py-[12px]  rounded"
             />
             {errors.password && (
               <p className="text-red-500">{errors.password.message}</p>
@@ -72,7 +76,7 @@ const Login = () => {
             >
               Login
             </button>
-            <p className="text-[#98A2B3] text-center self-center">
+            <p className="text-[#98A2B3] text-sm text-center self-center">
               Didn't have an account?
               <Link to={"/Register"} className="text-[#2AA88F] underline">
                 Sign Up
