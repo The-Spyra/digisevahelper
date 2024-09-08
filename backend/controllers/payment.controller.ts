@@ -1,4 +1,4 @@
-import { Request, response, Response } from "express"
+import { Request, Response } from "express"
 import { plans } from "../models/plan.model"
 import razorpay from "../utils/razorpay"
 import crypto from "crypto"
@@ -136,13 +136,12 @@ export const verifyPayment = async (req: Request, res: Response) => {
 
   if (user.planExp && user.planExp.getTime() > Date.now()) {
     if (user.planType == planType) {
-      const newExpirationDate = new Date(
-        user.planExp.getTime() + 30 * 24 * 60 * 60 * 1000
-      )
+      const newExpirationDate = new Date(user.planExp.getFullYear() + 1)
 
       user.planExp = newExpirationDate
     } else {
-      const newExpirationDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      const newExpirationDate = new Date()
+      newExpirationDate.setFullYear(newExpirationDate.getFullYear() + 1)
 
       user.planExp = newExpirationDate
     }
