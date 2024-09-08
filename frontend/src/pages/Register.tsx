@@ -54,14 +54,14 @@ const Register = () => {
     <div className=" min-h-screen">
       <Navbar />
       <div className="flex flex-col items-center justify-center h-full py-10">
-        <div className="w-[40%] p-[55px] bg-gradient-to-tl from-[#046350] to-[#67ECD1] shadow-xl rounded-xl">
+        <div className="md:w-[40%] p-5 md:p-[55px] bg-gradient-to-tl from-[#046350] to-[#67ECD1] shadow-xl rounded-xl">
           <div className="flex flex-col items-center gap-5 bg-white rounded-xl px-[36px] py-8">
             <p className="text-4xl">Create an account</p>
             <form
               className="flex flex-col gap-3 w-full"
               onSubmit={handleSubmit(submit)}
             >
-              <label>Email</label>
+              <label className="hidden md:block">Email</label>
               <input
                 {...register("email")}
                 placeholder="Email"
@@ -71,7 +71,7 @@ const Register = () => {
               {errors.email && (
                 <p className="text-red-500">{errors.email.message}</p>
               )}
-              <label>Shop Name</label>
+              <label className="hidden md:block">Shop Name</label>
               <input
                 {...register("shopName")}
                 placeholder="Shop Name"
@@ -81,7 +81,7 @@ const Register = () => {
               {errors.shopName && (
                 <p className="text-red-500">{errors.shopName.message}</p>
               )}
-              <label>Phone Number</label>
+              <label className="hidden md:block">Phone Number</label>
               <input
                 {...register("phone")}
                 placeholder="Phone Number"
@@ -91,7 +91,7 @@ const Register = () => {
               {errors.phone && (
                 <p className="text-red-500">{errors.phone.message}</p>
               )}
-              <label>Password</label>
+              <label className="hidden md:block">Password</label>
               <input
                 {...register("password")}
                 placeholder="Password"
@@ -101,7 +101,7 @@ const Register = () => {
               {errors.password && (
                 <p className="text-red-500">{errors.password.message}</p>
               )}
-              <label>Confirm Password</label>
+              <label className="hidden md:block">Confirm Password</label>
               <input
                 {...register("confirmPassword")}
                 placeholder="Confirm password"
