@@ -123,7 +123,9 @@ function Navbar() {
             </p>
           </div>
         </div>
-        <h1 className="font-bold md:text-[26px] ">DIGISEVAHELPER</h1>
+        <Link to={"/"} className="font-bold md:text-[26px] ">
+          DIGISEVAHELPER
+        </Link>
       </div>
       <div className="text-[14px] flex items-center gap-5 font-semibold ">
         <Link
