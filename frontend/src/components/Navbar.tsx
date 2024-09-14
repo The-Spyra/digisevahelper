@@ -1,13 +1,24 @@
-import { useEffect } from "react"
-import { Link } from "react-router-dom"
+import { ReactNode, useEffect } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { useUser } from "../context/userContext"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./shared/Dropdown"
+import Cookies from "js-cookie"
 
 function Navbar() {
+  const { user } = useUser()
+
   useEffect(() => {
     const elem = document.getElementById("mobile-nav")
     if (elem) {
       elem.style.transform = "translateX(-100%)"
     }
   })
+
   return (
     <div className="w-full bg-[#00AA88] px-3 py-2 rounded-b-md shadow-[1px_1px_35px_1px] shadow-slate-500 flex justify-between items-center">
       <div className="flex items-center gap-3">
@@ -161,10 +172,35 @@ function Navbar() {
             />
           </svg>
         </Link>
-        <Link to={"/register"}>Register</Link>
-        <Link to={"/login"}>Login</Link>
+        {user?.shopName ? (
+          <LogoutDropDown>{user.shopName}</LogoutDropDown>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Link to={"/register"}>Register</Link>
+            <Link to={"/login"}>Login</Link>
+          </div>
+        )}
       </div>
     </div>
+  )
+}
+
+const LogoutDropDown = ({ children }: { children: ReactNode }) => {
+  const navigate = useNavigate()
+  const logout = () => {
+    Cookies.remove("token")
+    navigate("/login")
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
+      <DropdownMenuContent className="bg-white">
+        <DropdownMenuItem onClick={logout} className="text-red-500">
+          Logout
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
 

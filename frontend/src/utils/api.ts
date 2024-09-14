@@ -1,7 +1,6 @@
 import axios, { isAxiosError } from "axios"
 import { NavigateFunction } from "react-router-dom"
 import { toast } from "sonner"
-import cookies from "js-cookie"
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,

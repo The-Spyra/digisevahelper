@@ -6,8 +6,7 @@ interface Service {
   documents: string[]
   description: string
   provided: boolean
-  minPrice: number
-  maxPrice: number
+  price: string
   createdAt: Date
 }
 

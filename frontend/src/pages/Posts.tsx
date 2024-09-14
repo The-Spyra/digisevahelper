@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Poster from "../types/poster.type"
 import api, { handleAxiosError } from "../utils/api"
 import { toast } from "sonner"
@@ -82,32 +82,32 @@ function Posts() {
       toast.error("Please select a file")
     }
   }
-  const downloadImage = (imageUrl:string) => {
-    const link = document.createElement('a');
-    link.href = imageUrl; // The data URL
-    link.download = 'image.jpg'; // The desired file name
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const downloadImage = (imageUrl: string) => {
+    const link = document.createElement("a")
+    link.href = imageUrl // The data URL
+    link.download = "image.jpg" // The desired file name
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
   }
 
   const downloadPoster = async (posterId: string) => {
     try {
       const response = await api.get(`/poster/download?posterId=${posterId}`, {
-        responseType: 'arraybuffer', // Important: This tells Axios to treat the response as an ArrayBuffer
+        responseType: "arraybuffer", // Important: This tells Axios to treat the response as an ArrayBuffer
       })
       const data = response.data
       console.log(data)
-      const blob = new Blob([data], { type: 'image/jpeg' });
-      const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    console.log(url)
-    link.href = url;
-    link.download = 'image.jpg'; // Desired file name
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+      const blob = new Blob([data], { type: "image/jpeg" })
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement("a")
+      console.log(url)
+      link.href = url
+      link.download = "image.jpg" // Desired file name
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
     } catch (error) {
       console.log(error)
       handleAxiosError(error, navigate)
@@ -115,7 +115,7 @@ function Posts() {
   }
 
   return (
-    <div className="bg-[#DDE2E1] min-h-screen pb-5">
+    <div className="bg-[#DDE2E1] pb-5">
       <Navbar />
       <div className=" flex flex-col justify-center">
         <h1 className="font-extrabold text-[26px] md:text-[64px] text-center mt-20">
@@ -145,8 +145,8 @@ function Posts() {
             className="w-full placeholder:text-[#00000054] placeholder:text-center font-semibold border-none outline-none px-2 bg-transparent"
           />
         </label>
-        <div className="md:w-[70%] px-[6px] w-full self-center h-[250px] md:h-[150px] mt-10 flex gap-2 md:gap-5">
-          <div className="md:w-[60%] w-[50%] py-5 flex flex-col justify-center items-center gap-5 h-full bg-gradient-to-br from-[#096C59] to-[#12D2AC] shadow-lg rounded-3xl">
+        <div className="md:w-[70%] px-[6px] w-full self-center mt-10 flex flex-col md:flex-row items-center gap-5 md:gap-5">
+          <div className="md:w-[60%] w-full p-5 flex flex-col justify-center items-center gap-5 h-full bg-gradient-to-br from-[#096C59] to-[#12D2AC] shadow-lg rounded-3xl">
             <div className="flex md:flex-row flex-col gap-10 ">
               <div className="flex flex-col gap-2 justify-start">
                 <label className="font-semibold">Shop Name</label>
@@ -165,7 +165,7 @@ function Posts() {
               SUBMIT
             </button>
           </div>
-          <div className="md:w-[40%] w-[50%] px-[6px] py-5 h-full flex flex-col justify-center items-center gap-5 bg-gradient-to-br from-[#096C59] to-[#12D2AC] shadow-lg rounded-3xl">
+          <div className="md:w-[40%]  px-[6px] py-5 flex flex-col justify-center items-center gap-5 bg-gradient-to-br from-[#096C59] to-[#12D2AC] shadow-lg rounded-3xl h-full w-full">
             <div className="flex md:flex-row flex-col gap-10 ">
               <div className="flex flex-col gap-2 justify-start">
                 <label className="font-semibold">Upload Banner</label>

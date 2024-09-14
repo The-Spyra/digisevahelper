@@ -30,12 +30,11 @@ export const createService = async (req: Request, res: Response) => {
     redirectUrl,
     documents,
     description,
-    minPrice,
+    price,
     provided,
-    maxPrice,
   } = req.body
 
-  if (!name || !imageUrl || !redirectUrl || !description) {
+  if (!name || !imageUrl || !description) {
     return res.status(400).send({
       success: false,
       message: "Missing data",
@@ -49,8 +48,7 @@ export const createService = async (req: Request, res: Response) => {
     description,
     documents: documents || [],
     provided,
-    maxPrice,
-    minPrice,
+    price,
   })
 
   await service.save()
@@ -95,9 +93,8 @@ export const updateService = async (req: Request, res: Response) => {
     redirectUrl,
     documents,
     description,
-    minPrice,
     provided,
-    maxPrice,
+    price,
   } = req.body
   const { id } = req.params
 
@@ -141,16 +138,11 @@ export const updateService = async (req: Request, res: Response) => {
     service.provided = provided
 
     if (provided) {
-      if (typeof minPrice == "number") {
-        service.minPrice = minPrice
-      }
-
-      if (typeof maxPrice == "number") {
-        service.maxPrice = maxPrice
+      if (price) {
+        service.price = price
       }
     } else {
-      service.minPrice = 0
-      service.maxPrice = 0
+      service.price = ""
     }
   }
 

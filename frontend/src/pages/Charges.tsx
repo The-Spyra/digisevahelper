@@ -68,7 +68,7 @@ function Charges() {
               {e.name}
             </h1>
             <h1 className="text-[13px] md:text-[30px] font-semibold text-black">
-              {e.minPrice} - {e.maxPrice} ₹
+              {e.price} ₹
             </h1>
           </div>
         ))}

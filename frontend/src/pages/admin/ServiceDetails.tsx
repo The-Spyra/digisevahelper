@@ -40,8 +40,7 @@ const ServiceDetails = () => {
     defaultValues: {
       documents: [""],
       provided: false,
-      minPrice: 0,
-      maxPrice: 0,
+      price: "",
     },
   })
   const provided = watch("provided")
@@ -57,8 +56,7 @@ const ServiceDetails = () => {
       setValue("documents", service.documents)
       setValue("redirectUrl", service.redirectUrl)
       setValue("provided", service.provided)
-      setValue("minPrice", service.minPrice)
-      setValue("maxPrice", service.maxPrice)
+      setValue("price", service.price)
     }
   }, [service, setValue])
 
@@ -170,10 +168,10 @@ const ServiceDetails = () => {
   return (
     <div className="flex flex-col items-center justify-center h-full w-full">
       <form
-        className="flex flex-col items-center justify-between w-full h-full pb-10"
+        className="flex flex-col gap-5 items-center justify-between w-full h-full pb-10"
         onSubmit={handleSubmit(updateService)}
       >
-        <div className="flex items-center h-full w-full gap-10">
+        <div className="flex flex-col md:flex-row items-center h-full w-full gap-10">
           <div className="flex flex-col gap-3 pb-3 items-center w-full h-full">
             <ImageDropZone
               file={file}
@@ -205,27 +203,13 @@ const ServiceDetails = () => {
             </div>
             {provided && (
               <div className="flex items-center gap-5 w-full">
-                <p>Min</p>
-                <CustomInput
-                  {...register("minPrice", { valueAsNumber: true })}
-                  type="number"
-                />
-                <p>Max</p>
-                <CustomInput
-                  {...register("maxPrice", {
-                    valueAsNumber: true,
-                    setValueAs: (val) => (isNaN(val) ? 0 : parseInt(val)),
-                  })}
-                  type="number"
-                />
+                <p>Price</p>
+                <CustomInput {...register("price")} type="string" />
               </div>
             )}
 
-            {errors.minPrice && (
-              <p className="text-red-500">{errors.minPrice.message}</p>
-            )}
-            {errors.maxPrice && (
-              <p className="text-red-500">{errors.maxPrice.message}</p>
+            {errors.price && (
+              <p className="text-red-500">{errors.price.message}</p>
             )}
           </div>
           <div className="flex flex-col gap-5 items-center h-full w-[80%]">
