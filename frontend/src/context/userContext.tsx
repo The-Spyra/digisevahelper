@@ -8,7 +8,7 @@ import {
 import User from "../types/user.type"
 import api, { handleAxiosError } from "../utils/api"
 import { toast } from "sonner"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import Cookies from "js-cookie"
 
 interface contextType {
@@ -22,6 +22,7 @@ const userConext = createContext<contextType>({
 export const UserProvier = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User>()
   const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     if (Cookies.get("token"))
@@ -29,7 +30,11 @@ export const UserProvier = ({ children }: { children: ReactNode }) => {
         .get("/user")
         .then(({ data }) => {
           if (data.success) {
-            setUser(data.user)
+            if (data.user) {
+              setUser(data.user)
+            } else {
+              setUser(undefined)
+            }
           } else {
             toast.error(data.message)
           }
@@ -37,7 +42,7 @@ export const UserProvier = ({ children }: { children: ReactNode }) => {
         .catch((error) => {
           handleAxiosError(error, navigate)
         })
-  }, [navigate])
+  }, [navigate, location.pathname])
 
   return <userConext.Provider value={{ user }}>{children}</userConext.Provider>
 }

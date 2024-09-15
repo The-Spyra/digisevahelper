@@ -67,7 +67,7 @@ const AdminForms = () => {
           onNewForm={onNewForm}
           className="bg-custom-primary text-white rounded-full px-3 py-2"
         >
-          News
+          New
         </NewForm>
       </div>
       <div className="h-full overflow-y-auto mb-20 pe-5">

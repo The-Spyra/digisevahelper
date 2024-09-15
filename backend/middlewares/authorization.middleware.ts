@@ -10,7 +10,6 @@ const authorizationMiddleware = async (
   const token = req.cookies.token
 
   if (!token) {
-    res.clearCookie("token")
     return res.status(403).send({
       success: false,
       message: "You are not loggedin",
@@ -32,7 +31,6 @@ const authorizationMiddleware = async (
   }
 
   if (!user.verified) {
-    res.clearCookie("token")
     return res.status(403).send({
       success: false,
       message: "Account not verified",

@@ -13,7 +13,6 @@ const serviceSchema = new mongoose.Schema<Service>(
     },
     redirectUrl: {
       type: String,
-      required: true,
     },
     description: {
       type: String,
@@ -27,11 +26,8 @@ const serviceSchema = new mongoose.Schema<Service>(
       type: [String],
       default: [],
     },
-    minPrice: {
-      type: Number,
-    },
-    maxPrice: {
-      type: Number,
+    price: {
+      type: String,
     },
   },
   { timestamps: true }

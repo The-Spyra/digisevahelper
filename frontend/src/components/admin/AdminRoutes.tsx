@@ -3,7 +3,7 @@ import AdminNavbar from "./AdminNavbar"
 
 const AdminRoutes = () => {
   return (
-    <div className="flex flex-col items-center gap-5 h-screen overflow-hidden">
+    <div className="flex flex-col items-center gap-5 min-h-screen">
       <AdminNavbar />
       <div className="h-full w-full px-10">
         <Outlet />
