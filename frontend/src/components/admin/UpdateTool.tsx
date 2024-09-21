@@ -11,11 +11,12 @@ import cn from "../../utils/cn"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import CustomInput from "./shared/CustomInput"
 import CustomSubmitButton from "./shared/CustomSubmitButton"
+import adminApi from "../../utils/adminApi"
 
 interface Props {
   children: ReactNode
@@ -58,7 +59,7 @@ const UpdateTool: FC<Props> = ({
   const updateTools = useCallback(
     async (body: formType) => {
       try {
-        const { data } = await api.put(`/admin/tool/${tool._id}`, body)
+        const { data } = await adminApi.put(`/admin/tool/${tool._id}`, body)
 
         if (data.success) {
           onToolUpdate(data.tool)
@@ -76,7 +77,7 @@ const UpdateTool: FC<Props> = ({
 
   const deleteTool = useCallback(async () => {
     try {
-      const { data } = await api.delete(`/admin/tool/${tool._id}`)
+      const { data } = await adminApi.delete(`/admin/tool/${tool._id}`)
       if (data.success) {
         onToolDelete(tool._id)
         toast.success(data.message)

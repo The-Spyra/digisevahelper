@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react"
 import { z } from "zod"
 import { useForm, useFieldArray } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
@@ -13,6 +13,7 @@ import CustomInput from "../../components/admin/shared/CustomInput"
 import CustomSubmitButton from "../../components/admin/shared/CustomSubmitButton"
 import serviceFormSchema from "../../schema/serviceFormSchema"
 import Service from "../../types/service.type"
+import adminApi from "../../utils/adminApi"
 
 type formType = z.infer<typeof serviceFormSchema>
 
@@ -61,7 +62,7 @@ const ServiceDetails = () => {
   }, [service, setValue])
 
   useEffect(() => {
-    api
+    adminApi
       .get(`/admin/service/${id}`)
       .then(({ data }) => {
         if (data.success) {
@@ -78,7 +79,7 @@ const ServiceDetails = () => {
   const putApiCall = useCallback(
     async (body: formType & { imageUrl?: string }) => {
       try {
-        const { data } = await api.put(`/admin/service/${id}`, body)
+        const { data } = await adminApi.put(`/admin/service/${id}`, body)
         if (data.success) {
           navigate(-1)
         } else {
@@ -127,7 +128,7 @@ const ServiceDetails = () => {
     }
 
     try {
-      const { data } = await api.delete(`/admin/service/${service._id}`)
+      const { data } = await adminApi.delete(`/admin/service/${service._id}`)
       if (data.success) {
         navigate(-1)
       } else {

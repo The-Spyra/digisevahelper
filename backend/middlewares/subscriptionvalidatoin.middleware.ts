@@ -4,8 +4,8 @@ import userModel from "../models/user.model"
 
 const subscriptionValidation = (access: "service" | "full") => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.cookies.token
-    const payload = verifyToken(token)
+    const token = req.headers.authorization
+    const payload = verifyToken(token!)
 
     const user = await userModel.findById(payload.id)
 
@@ -24,7 +24,7 @@ const subscriptionValidation = (access: "service" | "full") => {
       })
     }
 
-    if (user.planExp.getTime() < Date.now()) {
+    if (user?.planExp?.getTime() < Date.now()) {
       return res.status(400).send({
         success: false,
         message: "Subscripton is expired",

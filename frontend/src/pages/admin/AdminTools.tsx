@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import Tool from "../../types/tool.type"
 import NewTool from "../../components/admin/NewTool"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import UpdateTool from "../../components/admin/UpdateTool"
+import adminApi from "../../utils/adminApi"
 
 const AdminTools = () => {
   const navigate = useNavigate()
@@ -28,7 +29,7 @@ const AdminTools = () => {
   useEffect(() => {
     const timeout = setTimeout(async () => {
       try {
-        const { data } = await api.get(`/admin/tool?name=${search}`)
+        const { data } = await adminApi.get(`/admin/tool?name=${search}`)
         if (data.success) {
           setTools(data.tools)
         } else {

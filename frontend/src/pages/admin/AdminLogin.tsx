@@ -29,6 +29,7 @@ const AdminLogin = () => {
 
       console.log(data)
       if (data.success) {
+        localStorage.setItem("adminToken", data.token)
         navigate("/admin")
       } else {
         toast.error(data.message)

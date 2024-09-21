@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import Poster from "../../types/poster.type"
 import NewPoster from "../../components/admin/NewPoster"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import UpdatePoster from "../../components/admin/UpdatePoster"
+import adminApi from "../../utils/adminApi"
 
 const AdminPosters = () => {
   const navigate = useNavigate()
@@ -28,7 +29,7 @@ const AdminPosters = () => {
   useEffect(() => {
     const timeout = setTimeout(async () => {
       try {
-        const { data } = await api.get(`/admin/poster?name=${search}`)
+        const { data } = await adminApi.get(`/admin/poster?name=${search}`)
         if (data.success) {
           setPosters(data.posters)
         } else {

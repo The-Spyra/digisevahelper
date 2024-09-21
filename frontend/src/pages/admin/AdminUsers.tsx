@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react"
 import User from "../../types/user.type"
 import { Link, useNavigate } from "react-router-dom"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
 import { toast } from "sonner"
+import adminApi from "../../utils/adminApi"
 
 const AdminUsers = () => {
   const naviagte = useNavigate()
@@ -12,7 +13,7 @@ const AdminUsers = () => {
   useEffect(() => {
     const timeout = setTimeout(async () => {
       try {
-        const { data } = await api.get(`/admin/user?name=${search}`)
+        const { data } = await adminApi.get(`/admin/user?name=${search}`)
         if (data.success) {
           setUsers(data.users)
         } else {
@@ -31,7 +32,10 @@ const AdminUsers = () => {
   const toggleBlock = useCallback(
     async (userId: string, blocked: boolean) => {
       try {
-        const { data } = await api.put("/admin/user/block", { userId, blocked })
+        const { data } = await adminApi.put("/admin/user/block", {
+          userId,
+          blocked,
+        })
         if (data) {
           setUsers((prev) => {
             return prev.map((e) => (e._id == userId ? { ...e, blocked } : e))
@@ -50,7 +54,9 @@ const AdminUsers = () => {
   const verfiyBanner = useCallback(
     async (userId: string) => {
       try {
-        const { data } = await api.put("/admin/user/verifyBanner", { userId })
+        const { data } = await adminApi.put("/admin/user/verifyBanner", {
+          userId,
+        })
         if (data.success) {
           setUsers((prev) => {
             const temp = prev.map((e) =>

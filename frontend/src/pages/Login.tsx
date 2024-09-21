@@ -26,6 +26,7 @@ const Login = () => {
     try {
       const { data } = await api.post("/auth/login", body)
       if (data.success) {
+        localStorage.setItem("token", data.token)
         navigate("/")
       } else {
         toast.error(data.message)

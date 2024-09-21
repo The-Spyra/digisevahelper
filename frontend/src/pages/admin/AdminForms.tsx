@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import NewForm from "../../components/admin/NewForm"
 import Form from "../../types/form.type"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
 import { toast } from "sonner"
 import { useNavigate } from "react-router-dom"
 import UpdateForm from "../../components/admin/UpdateForm"
 import { FileIcon } from "lucide-react"
+import adminApi from "../../utils/adminApi"
 
 const AdminForms = () => {
   const navigate = useNavigate()
@@ -29,7 +30,7 @@ const AdminForms = () => {
   useEffect(() => {
     const timeout = setTimeout(async () => {
       try {
-        const { data } = await api(`/admin/form?name=${search}`)
+        const { data } = await adminApi(`/admin/form?name=${search}`)
 
         if (data.success) {
           if (data.success) {

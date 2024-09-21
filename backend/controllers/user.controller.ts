@@ -5,8 +5,8 @@ import { plans } from "../models/plan.model"
 import razorpay from "../utils/razorpay"
 
 export const getUserDetails = async (req: Request, res: Response) => {
-  const token = req.cookies.token
-  const payload = verifyToken(token)
+  const token = req.headers.authorization
+  const payload = verifyToken(token!)
 
   const user = await userModel.findById(payload.id)
 
@@ -27,8 +27,8 @@ export const getUserDetails = async (req: Request, res: Response) => {
 
 export const userUploadBanner = async (req: Request, res: Response) => {
   const { bannerUrl } = req.body
-  const token = req.cookies.token
-  const payload = verifyToken(token)
+  const token = req.headers.authorization
+  const payload = verifyToken(token!)
 
   if (!bannerUrl) {
     return res.status(400).send({

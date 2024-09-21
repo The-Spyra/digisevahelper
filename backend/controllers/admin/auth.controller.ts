@@ -32,13 +32,10 @@ export const adminLogin = async (req: Request, res: Response) => {
 
   const token = signToken(admin._id)
 
-  res.cookie("adminToken", token, {
-    maxAge: 24 * 60 * 60 * 1000,
-  })
-
   res.status(200).send({
     success: true,
     message: "Logged in successfully",
+    token,
   })
 }
 

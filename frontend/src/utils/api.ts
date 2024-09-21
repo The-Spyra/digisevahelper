@@ -4,7 +4,14 @@ import { toast } from "sonner"
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
-  withCredentials: true,
+})
+
+api.interceptors.request.use((req) => {
+  const token = localStorage.getItem("token")
+  if (token) {
+    req.headers.Authorization = token
+  }
+  return req
 })
 
 export const handleAxiosError = (
@@ -13,6 +20,7 @@ export const handleAxiosError = (
 ) => {
   if (isAxiosError(error)) {
     if (error.response?.data.error == "unauthorized") {
+      localStorage.removeItem("token")
       navigate("/login")
     }
 
@@ -25,6 +33,7 @@ export const handleAxiosError = (
     }
 
     if (error.response?.data.error == "admin-unauthorized") {
+      localStorage.removeItem("adminToken")
       navigate("/admin/login")
     }
 

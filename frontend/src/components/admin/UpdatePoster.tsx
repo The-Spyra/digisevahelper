@@ -11,7 +11,7 @@ import cn from "../../utils/cn"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
@@ -19,6 +19,7 @@ import { storage } from "../../utils/firebase"
 import CustomInput from "./shared/CustomInput"
 import CustomSubmitButton from "./shared/CustomSubmitButton"
 import ImageDropZone from "./upload/ImageDropZone"
+import adminApi from "../../utils/adminApi"
 
 interface Props {
   children: ReactNode
@@ -62,7 +63,7 @@ const UpdatePoster: FC<Props> = ({
   const putPoster = useCallback(
     async (body: { name?: string; imageUrl?: string }) => {
       try {
-        const { data } = await api.put(`/admin/poster/${poster._id}`, body)
+        const { data } = await adminApi.put(`/admin/poster/${poster._id}`, body)
         if (data.success) {
           onPosterUpdate(data.poster)
           toast.success(data.message)
@@ -119,7 +120,7 @@ const UpdatePoster: FC<Props> = ({
 
   const deletePoster = useCallback(async () => {
     try {
-      const { data } = await api.delete(`/admin/poster/${poster._id}`)
+      const { data } = await adminApi.delete(`/admin/poster/${poster._id}`)
       if (data.success) {
         onPosterDelete(poster._id)
         toast.success(data.message)

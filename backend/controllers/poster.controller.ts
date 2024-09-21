@@ -4,7 +4,7 @@ import { mergeImagesWithWatermark } from "../utils/merge"
 import { verifyToken } from "../utils/auth"
 import userModel from "../models/user.model"
 import fs from "fs"
-import {v4} from "uuid"
+import { v4 } from "uuid"
 
 export const getAllPosters = async (req: Request, res: Response) => {
   const { name } = req.query
@@ -52,8 +52,8 @@ export const getPosterDetails = async (req: Request, res: Response) => {
 
 export const downloadPoster = async (req: Request, res: Response) => {
   const { posterId } = req.query
-  const token = req.cookies.token
-  const payload = verifyToken(token)
+  const token = req.headers.authorization
+  const payload = verifyToken(token!)
 
   const user = await userModel.findById(payload.id)
   const poster = await posterModel.findById(posterId)
@@ -72,8 +72,8 @@ export const downloadPoster = async (req: Request, res: Response) => {
     })
   }
   //  result is buffer
-  const output = "./"+v4()+".jpg"
-   await mergeImagesWithWatermark(
+  const output = "./" + v4() + ".jpg"
+  await mergeImagesWithWatermark(
     poster.imageUrl,
     user.bannerUrl,
     user.shopName,
@@ -82,7 +82,7 @@ export const downloadPoster = async (req: Request, res: Response) => {
   )
   const result = fs.readFileSync(output)
   fs.unlinkSync(output)
-  
+
   if (!result) {
     return res.status(400).send({
       success: false,
@@ -91,6 +91,5 @@ export const downloadPoster = async (req: Request, res: Response) => {
   }
   console.log(result)
 
-  
   await res.status(200).send(result)
 }

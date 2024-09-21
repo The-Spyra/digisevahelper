@@ -6,7 +6,6 @@ import connectDb from "./config/database.config"
 import errorHandlingMiddleware from "./middlewares/errorhandling.middleware"
 import authRoute from "./routes/auth.route"
 import userRoute from "./routes/user.route"
-import cookies from "cookie-parser"
 import adminRoute from "./routes/admin.route"
 import serviceRoute from "./routes/service.route"
 import posterRoute from "./routes/poster.route"
@@ -22,12 +21,10 @@ const app = express()
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cookies())
 app.use(morgan("dev"))
 app.use(
   cors({
     origin: process.env.FRONTEND,
-    credentials: true,
   })
 )
 

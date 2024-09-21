@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import Service from "../../types/service.type"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
 import { toast } from "sonner"
 import { Link, useNavigate } from "react-router-dom"
+import adminApi from "../../utils/adminApi"
 
 const AdminDashboard = () => {
   const navigate = useNavigate()
@@ -12,7 +13,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const timeout = setTimeout(async () => {
       try {
-        const { data } = await api.get(`/admin/service?name=${search}`)
+        const { data } = await adminApi.get(`/admin/service?name=${search}`)
         if (data.success) {
           setServices(data.services)
         } else {

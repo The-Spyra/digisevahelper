@@ -2,7 +2,7 @@ import { useState } from "react"
 import { z } from "zod"
 import { useForm, useFieldArray } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
@@ -12,6 +12,7 @@ import ImageDropZone from "../../components/admin/upload/ImageDropZone"
 import CustomInput from "../../components/admin/shared/CustomInput"
 import CustomSubmitButton from "../../components/admin/shared/CustomSubmitButton"
 import serviceFormSchema from "../../schema/serviceFormSchema"
+import adminApi from "../../utils/adminApi"
 
 type formType = z.infer<typeof serviceFormSchema>
 
@@ -67,7 +68,7 @@ const NewService = () => {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             try {
-              api
+              adminApi
                 .post("/admin/service", { ...body, imageUrl: downloadURL })
                 .then(({ data }) => {
                   if (data.success) {

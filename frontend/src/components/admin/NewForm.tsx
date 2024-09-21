@@ -11,7 +11,8 @@ import cn from "../../utils/cn"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
+import adminApi from "../../utils/adminApi"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
@@ -69,7 +70,7 @@ const NewForm: FC<Props> = ({ children, className, onNewForm }) => {
       },
       () => {
         getDownloadURL(storageRef).then((fileUrl) => {
-          api
+          adminApi
             .post("/admin/form", { ...body, fileUrl })
             .then(({ data }) => {
               if (data.success) {

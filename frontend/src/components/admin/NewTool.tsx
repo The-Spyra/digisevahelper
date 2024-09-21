@@ -10,12 +10,13 @@ import cn from "../../utils/cn"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import Tool from "../../types/tool.type"
 import CustomInput from "./shared/CustomInput"
 import CustomSubmitButton from "./shared/CustomSubmitButton"
+import adminApi from "../../utils/adminApi"
 
 interface Props {
   children: ReactNode
@@ -43,7 +44,7 @@ const NewTool: FC<Props> = ({ children, className, onNewTool }) => {
 
   const createToole = async (body: formType) => {
     try {
-      const { data } = await api.post("/admin/tool", body)
+      const { data } = await adminApi.post("/admin/tool", body)
 
       if (data.success) {
         onNewTool(data.tool)

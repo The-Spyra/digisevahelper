@@ -7,7 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./shared/Dropdown"
-import Cookies from "js-cookie"
 
 function Navbar() {
   const { user } = useUser()
@@ -188,7 +187,7 @@ function Navbar() {
 const LogoutDropDown = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate()
   const logout = () => {
-    Cookies.remove("token")
+    localStorage.remove("token")
     navigate("/login")
   }
 

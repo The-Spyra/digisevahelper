@@ -11,7 +11,7 @@ import cn from "../../utils/cn"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
@@ -19,6 +19,7 @@ import { storage } from "../../utils/firebase"
 import CustomInput from "./shared/CustomInput"
 import CustomSubmitButton from "./shared/CustomSubmitButton"
 import ImageDropZone from "./upload/ImageDropZone"
+import adminApi from "../../utils/adminApi"
 
 interface Props {
   children: ReactNode
@@ -66,7 +67,7 @@ const NewPoster: FC<Props> = ({ children, className, onNewPoster }) => {
         },
         () => {
           getDownloadURL(storageRef).then((imageUrl) => {
-            api
+            adminApi
               .post("/admin/poster", { ...body, imageUrl })
               .then(({ data }) => {
                 if (data.success) {

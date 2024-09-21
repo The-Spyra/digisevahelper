@@ -7,7 +7,7 @@ const authorizationMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.cookies.token
+  const token = req.headers.authorization
 
   if (!token) {
     return res.status(403).send({
@@ -22,7 +22,6 @@ const authorizationMiddleware = async (
   const user = await userModel.findById(payload.id)
 
   if (!user) {
-    res.clearCookie("token")
     return res.status(400).send({
       success: false,
       message: "User account not found",
@@ -39,7 +38,6 @@ const authorizationMiddleware = async (
   }
 
   if (user.blocked) {
-    res.clearCookie("token")
     return res.status(403).send({
       success: false,
       message: "Account is blocked by an admin",

@@ -7,7 +7,7 @@ import { verifyToken } from "../utils/auth"
 
 export const createOrder = async (req: Request, res: Response) => {
   const { planType } = req.body as { planType: string }
-  const payload = verifyToken(req.cookies.token)
+  const payload = verifyToken(req.headers.authorization!)
 
   const user = await userModel.findById(payload.id)
 

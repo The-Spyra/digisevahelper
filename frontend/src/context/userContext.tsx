@@ -9,7 +9,6 @@ import User from "../types/user.type"
 import api, { handleAxiosError } from "../utils/api"
 import { toast } from "sonner"
 import { useLocation, useNavigate } from "react-router-dom"
-import Cookies from "js-cookie"
 
 interface contextType {
   user: User | undefined
@@ -25,7 +24,7 @@ export const UserProvier = ({ children }: { children: ReactNode }) => {
   const location = useLocation()
 
   useEffect(() => {
-    if (Cookies.get("token"))
+    if (localStorage.getItem("token"))
       api
         .get("/user")
         .then(({ data }) => {

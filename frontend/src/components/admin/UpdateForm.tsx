@@ -11,7 +11,7 @@ import cn from "../../utils/cn"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import api, { handleAxiosError } from "../../utils/api"
+import { handleAxiosError } from "../../utils/api"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
@@ -19,6 +19,7 @@ import { storage } from "../../utils/firebase"
 import FileDropZone from "./upload/FileDropZone"
 import { FileIcon } from "lucide-react"
 import CustomSubmitButton from "./shared/CustomSubmitButton"
+import adminApi from "../../utils/adminApi"
 
 interface Props {
   children: ReactNode
@@ -61,7 +62,7 @@ const UpdateForm: FC<Props> = ({
 
   const putForm = useCallback(
     async (body: { name?: string; fileUrl?: string }) => {
-      api
+      adminApi
         .put(`/admin/form/${form._id}`, body)
         .then(({ data }) => {
           if (data.success) {
@@ -111,7 +112,7 @@ const UpdateForm: FC<Props> = ({
 
   const deleteForm = useCallback(async () => {
     try {
-      const { data } = await api.delete(`/admin/form/${form._id}`)
+      const { data } = await adminApi.delete(`/admin/form/${form._id}`)
       if (data.success) {
         onFormDelete(form._id)
         toast.success(data.message)
